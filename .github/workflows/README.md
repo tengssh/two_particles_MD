@@ -196,3 +196,118 @@ When you push code, GitHub Actions will:
 
 You'll receive email notifications for failed runs (configurable in GitHub settings).
 
+---
+
+## 💡 Tips & Troubleshooting
+
+### Git Authentication Issues
+
+**Problem:** `remote rejected` error when pushing workflows
+
+**Solution:** Use SSH instead of HTTPS for authentication
+
+```bash
+# Check current remote URL
+git remote -v
+
+# If using HTTPS (https://github.com/...)
+origin  https://github.com/username/repo.git (fetch)
+origin  https://github.com/username/repo.git (push)
+
+# Switch to SSH (git@github.com:...)
+git remote set-url origin git@github.com:username/repo.git
+
+# Verify the change
+git remote -v
+origin  git@github.com:username/repo.git (fetch)
+origin  git@github.com:username/repo.git (push)
+
+# Now push works without OAuth scope issues
+git push origin main
+```
+
+**Why?** GitHub requires the `workflow` scope for OAuth tokens when modifying files in `.github/workflows/`. SSH authentication bypasses this requirement.
+
+### Windows Shell Commands
+
+If you're on Windows, here's how to switch between different shells:
+
+#### From PowerShell or CMD → Git Bash
+```bash
+# Launch Git Bash
+"C:\Program Files\Git\bin\bash.exe"
+
+# Or just click Git Bash icon in Start menu
+```
+
+#### From Git Bash → PowerShell
+```bash
+powershell
+```
+
+#### From Git Bash → CMD
+```bash
+cmd
+```
+
+#### From PowerShell → CMD
+```powershell
+cmd
+```
+
+#### From CMD → PowerShell
+```cmd
+powershell
+```
+
+#### Identifying Your Current Shell
+
+**Git Bash (MINGW64):**
+```bash
+user@COMPUTER MINGW64 /d/project/repo (main)
+$
+```
+
+**PowerShell:**
+```powershell
+PS D:\project\repo>
+```
+
+**CMD:**
+```cmd
+D:\project\repo>
+```
+
+### Common Workflow Issues
+
+#### Workflow Not Triggering
+- Check that workflow file is in `.github/workflows/`
+- Verify YAML syntax (use a YAML validator)
+- Ensure you pushed to the correct branch
+- Check repository settings → Actions → Allow all actions
+
+#### Tests Failing on CI but Passing Locally
+- Check Python version differences
+- Verify all dependencies in `requirements.txt`
+- Check for OS-specific issues (paths, line endings)
+- Review workflow logs for detailed error messages
+
+#### Badge Not Updating
+- Wait a few minutes for cache to clear
+- Hard refresh browser (Ctrl+F5)
+- Verify badge URL matches your username/repo
+- Check that workflow has run at least once
+
+---
+
+## 📚 Additional Resources
+
+- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+- [pytest Documentation](https://docs.pytest.org/)
+- [Codecov Documentation](https://docs.codecov.com/)
+- [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
+- [Git SSH Setup Guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+
+---
+
+*Last Updated: 2024-11-08*
