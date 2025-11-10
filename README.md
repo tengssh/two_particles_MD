@@ -41,6 +41,9 @@ Main simulation engine that:
 - Records trajectory history for both particles
 - Provides visualization methods showing both trajectories
 
+Note:
+- Uses `setattr` and `getattr` to handle wall collision counters internally
+
 ## Key Features
 
 ### Physics Implementation
@@ -242,6 +245,17 @@ This project demonstrates the capabilities of AI-assisted software development, 
 ## License
 
 MIT License - See LICENSE file for details
+
+## Branches
+
+This repository maintains the following branches:
+- **main**: The stable production branch containing the core implementation
+- **research**: Active development branch for exploring new features and improvements
+
+### Development Workflow
+1. The `main` branch contains the stable, production-ready code
+2. New features and research are developed in the `research` branch
+3. Tested and validated improvements are merged back to `main` via pull requests
 
 ## Contributing
 
