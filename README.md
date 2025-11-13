@@ -246,6 +246,26 @@ This project demonstrates the capabilities of AI-assisted software development, 
 
 MIT License - See LICENSE file for details
 
+## Performance & Parallelization
+
+While the current 2-particle system is already very fast, this project can be extended to N-body simulations with various parallelization techniques:
+
+- 📊 **[PARALLELIZATION_GUIDE.md](PARALLELIZATION_GUIDE.md)** - Comprehensive guide to parallelization strategies
+- 💻 **[examples/parallel_examples.py](examples/parallel_examples.py)** - Runnable benchmarks and code examples
+
+### Parallelization Techniques Covered:
+- **NumPy Vectorization** - 10-100x speedup, easy to implement
+- **Numba JIT Compilation** - 10-100x speedup for complex loops
+- **GPU Acceleration** - 50-500x speedup for large systems (PyTorch/CuPy)
+- **Spatial Decomposition** - O(N²) → O(N) scaling for force calculations
+- **MPI (Distributed Computing)** - 10-1000x speedup on HPC clusters
+- **Ensemble Parallelism** - Perfect scaling for parameter studies
+- **Async I/O** - Non-blocking data operations
+
+See the guides for detailed explanations, code examples, and benchmarks!
+
+---
+
 ## Branches
 
 This repository maintains the following branches:

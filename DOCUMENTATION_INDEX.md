@@ -43,6 +43,16 @@ Complete guide to all documentation in this project.
 | [.github/QUICK_REFERENCE.md](.github/QUICK_REFERENCE.md) | Command reference card | Developers |
 | [.github/BADGES.md](.github/BADGES.md) | Badge templates | Maintainers |
 
+### ⚡ Performance & Optimization
+
+| Document | Description | Audience |
+|----------|-------------|----------|
+| [PARALLELIZATION_GUIDE.md](PARALLELIZATION_GUIDE.md) | Comprehensive parallelization guide | Developers |
+| [examples/parallel_examples.py](examples/parallel_examples.py) | Runnable benchmarks | Developers |
+| [examples/README.md](examples/README.md) | Examples documentation | Developers |
+| [docs/MPI_INSTALLATION.md](docs/MPI_INSTALLATION.md) | MPI installation guide | HPC Users |
+| [requirements.txt](requirements.txt) | Core + optional packages | All Users |
+
 ### 🤖 AI-Assisted Development
 
 | Document | Description | Audience |
@@ -110,6 +120,18 @@ Complete guide to all documentation in this project.
 3. .github/AI_DEVELOPMENT_WORKFLOW.md (Development process)
    ↓
 4. Understand human-AI collaboration
+```
+
+### Path 5: I Want to Optimize Performance
+
+```
+1. PARALLELIZATION_GUIDE.md (Theory and techniques)
+   ↓
+2. examples/README.md (How to run benchmarks)
+   ↓
+3. examples/parallel_examples.py (Run benchmarks)
+   ↓
+4. Implement parallelization in your code
 ```
 
 ## 📖 Document Summaries
@@ -283,6 +305,18 @@ Complete guide to all documentation in this project.
 
 **"What commands do I need?"**
 → .github/QUICK_REFERENCE.md
+
+**"How can I make it faster?"**
+→ PARALLELIZATION_GUIDE.md
+
+**"How do I run benchmarks?"**
+→ examples/README.md
+
+**"How do I install MPI?"**
+→ docs/MPI_INSTALLATION.md
+
+**"What packages do I need for parallelization?"**
+→ requirements.txt (see optional dependencies section)
 
 ## 📊 Documentation Statistics
 
