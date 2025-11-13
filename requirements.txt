@@ -1,5 +1,85 @@
+# ============================================================================
+# Core Dependencies (Required)
+# ============================================================================
 numpy>=1.20.0
 matplotlib>=3.3.0
+
+# ============================================================================
+# Testing (Required for development)
+# ============================================================================
 pytest>=7.0.0
 pytest-cov>=3.0.0
 
+# ============================================================================
+# Optional: Parallelization & Performance
+# ============================================================================
+# Uncomment the packages you need based on your use case:
+#
+# Installation options:
+#   1. Install all: pip install -r requirements.txt (uncomment all below)
+#   2. Selective:   pip install numba torch mpi4py (choose what you need)
+#   3. Core only:   pip install numpy matplotlib pytest pytest-cov
+
+# ----------------------------------------------------------------------------
+# CPU Parallelization - JIT Compilation
+# ----------------------------------------------------------------------------
+# Recommended for: N-body simulations, complex loops
+# Speedup: 10-100x
+# Difficulty: Easy
+#
+# numba>=0.56.0
+
+# ----------------------------------------------------------------------------
+# GPU Acceleration
+# ----------------------------------------------------------------------------
+# Recommended for: Large systems (N > 10,000), long simulations
+# Speedup: 50-500x
+# Difficulty: Medium
+#
+# Option 1: PyTorch (Recommended - easier installation)
+# torch>=2.0.0
+#
+# Option 2: CuPy (NumPy-like GPU arrays)
+# Choose ONE based on your CUDA version:
+# cupy-cuda11x>=12.0.0      # For CUDA 11.x
+# cupy-cuda12x>=12.0.0      # For CUDA 12.x
+
+# ----------------------------------------------------------------------------
+# MPI - Distributed Computing
+# ----------------------------------------------------------------------------
+# Recommended for: Very large systems (N > 100,000), HPC clusters
+# Speedup: 10-1000x (scales to 1000s of cores)
+# Difficulty: Hard
+#
+# IMPORTANT: Requires MPI installation first!
+#
+# Linux/Mac:
+#   sudo apt-get install libopenmpi-dev openmpi-bin  # Ubuntu/Debian
+#   brew install open-mpi                            # macOS
+#
+# Windows:
+#   Download MS-MPI from:
+#   https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi
+#   Install both MS-MPI SDK and MS-MPI Runtime
+#
+# Then uncomment:
+# mpi4py>=3.1.0
+
+# ----------------------------------------------------------------------------
+# Async I/O
+# ----------------------------------------------------------------------------
+# Recommended for: Large trajectory files, non-blocking I/O
+# Speedup: Reduces I/O bottlenecks
+# Difficulty: Easy
+#
+# aiofiles>=23.0.0
+
+# ----------------------------------------------------------------------------
+# Distributed Computing Frameworks
+# ----------------------------------------------------------------------------
+# Recommended for: Complex workflows, parameter sweeps
+# Speedup: Varies
+# Difficulty: Medium-Hard
+#
+# dask[complete]>=2023.0.0  # Parallel NumPy/Pandas
+# ray[default]>=2.0.0       # Distributed computing framework
