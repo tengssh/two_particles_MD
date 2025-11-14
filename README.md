@@ -1,6 +1,6 @@
 # Two-Particle Molecular Dynamics Simulation in 2D Box
 
-![Tests](https://github.com/YOUR_USERNAME/two_particles_MD/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/tengssh/two_particles_MD/actions/workflows/tests.yml/badge.svg)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![AI-Assisted](https://img.shields.io/badge/AI--Assisted-Augment%20Agent-blueviolet.svg)](https://www.augmentcode.com/)
