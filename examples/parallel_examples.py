@@ -402,6 +402,78 @@ def show_mpi_info():
         print("     conda install -c conda-forge mpi4py")
 
 
+# Example 6: Async I/O for History Recording
+# ===========================================
+
+try:
+    import asyncio
+    import aiofiles
+
+    def save_history_sync(filename, positions, velocities, n_steps):
+        """Save trajectory history synchronously (BLOCKING)."""
+        with open(filename, 'w') as f:
+            for step in range(n_steps):
+                # Simulate position update
+                positions += velocities * 0.001
+
+                # Write to file (BLOCKS computation)
+                f.write(f"Step {step}\n")
+                for i, pos in enumerate(positions):
+                    f.write(f"  Particle {i}: {pos[0]:.6f}, {pos[1]:.6f}\n")
+
+
+    async def save_history_async(filename, positions, velocities, n_steps):
+        """Save trajectory history asynchronously (NON-BLOCKING)."""
+        async with aiofiles.open(filename, 'w') as f:
+            for step in range(n_steps):
+                # Simulate position update
+                positions += velocities * 0.001
+
+                # Write to file (NON-BLOCKING - allows other work)
+                await f.write(f"Step {step}\n")
+                for i, pos in enumerate(positions):
+                    await f.write(f"  Particle {i}: {pos[0]:.6f}, {pos[1]:.6f}\n")
+
+
+    def benchmark_async_io():
+        """Compare synchronous vs asynchronous I/O."""
+        N = 100
+        n_steps = 100
+        positions = np.random.rand(N, 2) * 20.0
+        velocities = np.random.rand(N, 2) * 0.1
+
+        # Synchronous I/O
+        start = time.time()
+        save_history_sync('trajectory_sync.txt', positions.copy(), velocities, n_steps)
+        sync_time = time.time() - start
+
+        # Asynchronous I/O
+        start = time.time()
+        asyncio.run(save_history_async('trajectory_async.txt', positions.copy(), velocities, n_steps))
+        async_time = time.time() - start
+
+        print(f"Synchronous I/O: {sync_time:.4f}s")
+        print(f"Asynchronous I/O: {async_time:.4f}s")
+        print(f"Speedup: {sync_time/async_time:.2f}x")
+        print(f"\n💡 Async I/O shines when:")
+        print(f"   - Writing large trajectory files")
+        print(f"   - Doing other work while I/O happens")
+        print(f"   - Multiple concurrent I/O operations")
+
+        # Clean up
+        import os
+        try:
+            os.remove('trajectory_sync.txt')
+            os.remove('trajectory_async.txt')
+        except:
+            pass
+
+    AIOFILES_AVAILABLE = True
+except ImportError:
+    AIOFILES_AVAILABLE = False
+    print("aiofiles not available. Install with: pip install aiofiles")
+
+
 # Main benchmark runner
 # =====================
 
@@ -431,6 +503,11 @@ if __name__ == "__main__":
     print("\n5. MPI (Message Passing Interface)")
     print("-" * 60)
     show_mpi_info()
+
+    if AIOFILES_AVAILABLE:
+        print("\n6. Async I/O (History Recording)")
+        print("-" * 60)
+        benchmark_async_io()
 
     print("\n" + "=" * 60)
     print("Benchmarks complete!")

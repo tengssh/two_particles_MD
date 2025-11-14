@@ -101,6 +101,23 @@ Creates an example MPI script and shows how to run it.
    mpiexec -n 4 python mpi_example.py
 ```
 
+### 6. Async I/O (History Recording) (requires `aiofiles`)
+Compares synchronous vs asynchronous file I/O for trajectory recording.
+
+**Expected output:**
+```
+Synchronous I/O: 1.2500s
+Asynchronous I/O: 1.1800s
+Speedup: 1.06x
+
+💡 Async I/O shines when:
+   - Writing large trajectory files
+   - Doing other work while I/O happens
+   - Multiple concurrent I/O operations
+
+✅ Temporary files cleaned up
+```
+
 ## 📦 Dependencies
 
 ### Required
@@ -110,6 +127,7 @@ Creates an example MPI script and shows how to run it.
 - `numba` - For JIT compilation examples
 - `torch` - For GPU acceleration examples
 - `mpi4py` - For MPI distributed computing examples
+- `aiofiles` - For async I/O examples
 
 ### Install Optional Dependencies
 
@@ -139,6 +157,9 @@ pip install torch --index-url https://download.pytorch.org/whl/cu121
 # MPI (distributed computing) - Requires MPI installation first!
 # See MPI installation instructions below
 pip install mpi4py
+
+# Async I/O (non-blocking file operations)
+pip install aiofiles
 ```
 
 #### MPI Installation
