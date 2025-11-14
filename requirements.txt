@@ -11,6 +11,13 @@ pytest>=7.0.0
 pytest-cov>=3.0.0
 
 # ============================================================================
+# Optional: Interactive Development
+# ============================================================================
+# Uncomment if you want to use Jupyter notebooks:
+# jupyter>=1.0.0
+# ipykernel>=6.0.0
+
+# ============================================================================
 # Optional: Parallelization & Performance
 # ============================================================================
 # Uncomment the packages you need based on your use case:

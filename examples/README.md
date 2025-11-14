@@ -5,10 +5,33 @@ This directory contains practical examples demonstrating various parallelization
 ## 📁 Files
 
 - **`parallel_examples.py`** - Runnable benchmarks comparing different parallelization approaches
+- **`parallel_examples.ipynb`** - Interactive Jupyter notebook with the same examples in separate cells
 
 ## 🚀 Quick Start
 
-### Basic Run
+### Option 1: Python Script
+```bash
+# Run all benchmarks
+python parallel_examples.py
+```
+
+### Option 2: Jupyter Notebook (Interactive) ⭐ Recommended
+```bash
+# Install Jupyter if needed
+pip install jupyter
+
+# Launch notebook
+jupyter notebook parallel_examples.ipynb
+```
+
+**Why use the notebook?**
+- ✅ Run examples in separate cells
+- ✅ See output immediately after each example
+- ✅ Modify and re-run individual examples
+- ✅ Add your own notes and experiments
+- ✅ Better for learning and exploration
+
+### Basic Run (Python Script)
 ```bash
 python examples/parallel_examples.py
 ```
