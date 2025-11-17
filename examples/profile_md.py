@@ -100,55 +100,52 @@ def component_timing():
     print("=" * 70)
     print("3. Component-Level Timing")
     print("=" * 70)
-    
+
     # Create simulation
     particle1 = Particle(position=np.array([5.0, 5.0]), velocity=np.array([0.1, 0.0]), is_fixed=True)
     particle2 = Particle(position=np.array([8.0, 5.0]), velocity=np.array([-0.05, 0.0]))
     potential = LennardJonesPotential()
     sim = TwoParticleMD(particle1, particle2, potential, box_size=(20.0, 20.0))
-    
+
     n_iterations = 1000
-    
-    # Time force calculation
+
+    # Time single step (includes force calculation, integration, boundaries)
     start = time.perf_counter()
     for _ in range(n_iterations):
-        sim.compute_forces()
-    force_time = time.perf_counter() - start
-    
-    # Time integration
-    start = time.perf_counter()
-    for _ in range(n_iterations):
-        # Velocity Verlet first half
-        sim.particle1.velocity += 0.5 * sim.particle1.force / sim.particle1.mass * sim.dt
-        sim.particle2.velocity += 0.5 * sim.particle2.force / sim.particle2.mass * sim.dt
-        
-        # Update positions
-        sim.particle1.position += sim.particle1.velocity * sim.dt
-        sim.particle2.position += sim.particle2.velocity * sim.dt
-    integration_time = time.perf_counter() - start
-    
-    # Time boundary checking
-    start = time.perf_counter()
-    for _ in range(n_iterations):
-        sim.apply_boundary_conditions()
-    boundary_time = time.perf_counter() - start
-    
+        sim.step()
+    step_time = time.perf_counter() - start
+
     # Time energy calculation
     start = time.perf_counter()
     for _ in range(n_iterations):
-        sim.compute_kinetic_energy()
-        sim.compute_potential_energy()
+        sim.get_energies()
     energy_time = time.perf_counter() - start
-    
+
+    # Time force calculation (via potential)
+    start = time.perf_counter()
+    for _ in range(n_iterations):
+        r_vector = sim.particle1.position - sim.particle2.position
+        r = np.linalg.norm(r_vector)
+        force_mag = sim.potential.force_magnitude(r)
+    force_calc_time = time.perf_counter() - start
+
+    # Time position update (simplified)
+    start = time.perf_counter()
+    for _ in range(n_iterations):
+        # Simulate position update
+        temp_pos = sim.particle2.position + sim.particle2.velocity * sim.dt
+    position_update_time = time.perf_counter() - start
+
     # Print results
-    total_time = force_time + integration_time + boundary_time + energy_time
-    
+    total_time = step_time + energy_time
+
     print(f"Component timing ({n_iterations} iterations):")
-    print(f"  Force calculation:    {force_time:.4f}s ({force_time/total_time*100:.1f}%)")
-    print(f"  Integration:          {integration_time:.4f}s ({integration_time/total_time*100:.1f}%)")
-    print(f"  Boundary conditions:  {boundary_time:.4f}s ({boundary_time/total_time*100:.1f}%)")
-    print(f"  Energy calculation:   {energy_time:.4f}s ({energy_time/total_time*100:.1f}%)")
-    print(f"  Total:                {total_time:.4f}s")
+    print(f"  Full step (step()):       {step_time:.4f}s ({step_time/total_time*100:.1f}%)")
+    print(f"  Energy calculation:       {energy_time:.4f}s ({energy_time/total_time*100:.1f}%)")
+    print(f"  Force calculation only:   {force_calc_time:.4f}s (isolated)")
+    print(f"  Position update only:     {position_update_time:.4f}s (isolated)")
+    print(f"  Total:                    {total_time:.4f}s")
+    print(f"\nAverage time per step: {step_time/n_iterations*1000:.4f} ms")
     print()
 
 
