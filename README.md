@@ -251,7 +251,9 @@ MIT License - See LICENSE file for details
 While the current 2-particle system is already very fast, this project can be extended to N-body simulations with various parallelization techniques:
 
 - 📊 **[PARALLELIZATION_GUIDE.md](PARALLELIZATION_GUIDE.md)** - Comprehensive guide to parallelization strategies
+- 🔍 **[PROFILING_GUIDE.md](PROFILING_GUIDE.md)** - Performance profiling techniques and tools
 - 💻 **[examples/parallel_examples.py](examples/parallel_examples.py)** - Runnable benchmarks and code examples
+- 📈 **[examples/profile_md.py](examples/profile_md.py)** - Performance profiling examples
 
 ### Parallelization Techniques Covered:
 - **NumPy Vectorization** - 10-100x speedup, easy to implement
@@ -261,6 +263,14 @@ While the current 2-particle system is already very fast, this project can be ex
 - **MPI (Distributed Computing)** - 10-1000x speedup on HPC clusters
 - **Ensemble Parallelism** - Perfect scaling for parameter studies
 - **Async I/O** - Non-blocking data operations
+
+### Profiling Tools Covered:
+- **cProfile** - Function-level profiling (built-in)
+- **line_profiler** - Line-by-line analysis
+- **memory_profiler** - Memory usage tracking
+- **py-spy** - Production profiling with flame graphs
+- **pyinstrument** - Statistical profiling with call stacks
+- **GPU profilers** - NVIDIA Nsight, PyTorch Profiler
 
 See the guides for detailed explanations, code examples, and benchmarks!
 

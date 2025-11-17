@@ -48,6 +48,10 @@ Complete guide to all documentation in this project.
 | Document | Description | Audience |
 |----------|-------------|----------|
 | [PARALLELIZATION_GUIDE.md](PARALLELIZATION_GUIDE.md) | Comprehensive parallelization guide | Developers |
+| [PROFILING_GUIDE.md](PROFILING_GUIDE.md) | Performance profiling techniques | Developers |
+| [examples/parallel_examples.py](examples/parallel_examples.py) | Parallelization benchmarks | Developers |
+| [examples/profile_md.py](examples/profile_md.py) | Profiling examples | Developers |
+| [examples/profiling_examples.ipynb](examples/profiling_examples.ipynb) | Interactive profiling notebook | Developers |
 | [examples/parallel_examples.py](examples/parallel_examples.py) | Runnable benchmarks | Developers |
 | [examples/README.md](examples/README.md) | Examples documentation | Developers |
 | [docs/MPI_INSTALLATION.md](docs/MPI_INSTALLATION.md) | MPI installation guide | HPC Users |
@@ -309,6 +313,12 @@ Complete guide to all documentation in this project.
 **"How can I make it faster?"**
 → PARALLELIZATION_GUIDE.md
 
+**"How do I profile my code?"**
+→ PROFILING_GUIDE.md
+
+**"How do I find performance bottlenecks?"**
+→ examples/profile_md.py or examples/profiling_examples.ipynb
+
 **"How do I run benchmarks?"**
 → examples/README.md
 
@@ -317,6 +327,9 @@ Complete guide to all documentation in this project.
 
 **"What packages do I need for parallelization?"**
 → requirements.txt (see optional dependencies section)
+
+**"What profiling tools should I use?"**
+→ PROFILING_GUIDE.md (see tools comparison table)
 
 ## 📊 Documentation Statistics
 

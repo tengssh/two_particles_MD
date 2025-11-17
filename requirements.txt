@@ -18,6 +18,29 @@ pytest-cov>=3.0.0
 # ipykernel>=6.0.0
 
 # ============================================================================
+# Optional: Performance Profiling
+# ============================================================================
+# Uncomment the profiling tools you need:
+#
+# Line-by-line profiling
+# line_profiler>=3.0.0
+#
+# Memory usage tracking
+# memory_profiler>=0.60.0
+#
+# Sampling profiler (flame graphs) - Recommended!
+# py-spy>=0.3.0
+#
+# cProfile visualization
+# snakeviz>=2.1.0
+#
+# Statistical profiler
+# pyinstrument>=4.0.0
+#
+# System monitoring
+# psutil>=5.9.0
+
+# ============================================================================
 # Optional: Parallelization & Performance
 # ============================================================================
 # Uncomment the packages you need based on your use case:
