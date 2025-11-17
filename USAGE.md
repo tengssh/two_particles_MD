@@ -87,7 +87,7 @@ Random seed: 42
 Particle 1 starting position: [7.99, 17.21]
 Particle 2 starting position: [13.71, 11.58]
 Initial separation: 8.03 Angstroms
-Initial velocity (both): [0.020, 0.020] Å/fs
+Initial velocity (both): [0.020, 0.020] A/fs
 Starting 2D box simulation for 5000 steps (dt=1.0 fs)...
 Total simulation time: 5000.000 fs
 Box size: 20.0 x 20.0 Angstroms
@@ -103,7 +103,7 @@ Energy Statistics:
   Final total energy:   -0.028268 kcal/mol
   Energy drift:         -5.476161e-02 kcal/mol
   Relative drift:       206.6942%
-  ⚠ Warning: Significant energy drift. Consider smaller time step.
+  [WARNING] Significant energy drift. Consider smaller time step.
 ```
 
 ### What to Look For
@@ -179,4 +179,39 @@ matplotlib.use('TkAgg')  # or 'Qt5Agg'
 ```python
 sim.run(n_steps=1000, record_interval=10)  # Record every 10 steps
 ```
+
+### Unicode Encoding Error on Windows
+**Problem**: `UnicodeEncodeError: 'cp950' codec can't encode character`
+**Cause**: Windows console using non-UTF-8 encoding (CP950, CP936, etc.)
+**Solution**: The code now automatically handles this! If you still see errors:
+
+**Option 1: Set Environment Variable (Recommended)**
+```bash
+set PYTHONIOENCODING=utf-8
+python md_simulation.py
+```
+
+**Option 2: Change Console Code Page**
+```bash
+chcp 65001
+python md_simulation.py
+```
+
+**Option 3: Use PowerShell Instead of CMD**
+PowerShell has better Unicode support than Command Prompt.
+
+**Option 4: Run in Python IDE**
+Most IDEs (VS Code, PyCharm, Jupyter) handle UTF-8 automatically.
+
+**Technical Details:**
+The code includes automatic encoding fixes for Windows:
+```python
+# Already included in md_simulation.py
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+```
+
+This ensures all output uses UTF-8 encoding, preventing crashes from Unicode characters.
 

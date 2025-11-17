@@ -1,6 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Two-Particle Molecular Dynamics Simulation
+
+A simple 2D molecular dynamics simulation of two particles interacting
+via the Lennard-Jones potential in a rectangular box with elastic walls.
+"""
+
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from typing import Tuple, List, Optional
+
+# Fix encoding for Windows console
+if sys.platform == 'win32':
+    import io
+    if hasattr(sys.stdout, 'buffer'):
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    if hasattr(sys.stderr, 'buffer'):
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 
 class Particle:
@@ -78,7 +96,7 @@ class LennardJonesPotential:
         - sigma: Distance at which potential is zero (length scale)
         - r: Distance between particles
 
-    The minimum of the potential occurs at r = 2^(1/6) * sigma ≈ 1.122 * sigma
+    The minimum of the potential occurs at r = 2^(1/6) * sigma ~= 1.122 * sigma
 
     Attributes:
         epsilon (float): Energy parameter in kcal/mol
@@ -462,11 +480,11 @@ class TwoParticleMD:
         print(f"  Relative drift:       {relative_drift:.4f}%")
 
         if relative_drift < 0.1:
-            print("  ✓ Excellent energy conservation!")
+            print("  [OK] Excellent energy conservation!")
         elif relative_drift < 1.0:
-            print("  ✓ Good energy conservation")
+            print("  [OK] Good energy conservation")
         else:
-            print("  ⚠ Warning: Significant energy drift. Consider smaller time step.")
+            print("  [WARNING] Significant energy drift. Consider smaller time step.")
 
     def plot_trajectory(self) -> None:
         """
@@ -593,7 +611,7 @@ class TwoParticleMD:
         # Add reference line for equilibrium distance (minimum of LJ potential)
         r_eq = 2 ** (1/6) * self.potential.sigma
         plt.axhline(y=r_eq, color='red', linestyle='--',
-                   label=f'Equilibrium distance = {r_eq:.3f} Å')
+                   label=f'Equilibrium distance = {r_eq:.3f} A')
         plt.legend(fontsize=10)
 
         plt.tight_layout()
@@ -651,7 +669,7 @@ if __name__ == "__main__":
 
     # Initial velocity
     initial_velocity = np.array([0.02, 0.02])  # Angstroms/fs
-    print(f"Initial velocity (particle 1): [{initial_velocity[0]:.3f}, {initial_velocity[1]:.3f}] Å/fs")
+    print(f"Initial velocity (particle 1): [{initial_velocity[0]:.3f}, {initial_velocity[1]:.3f}] A/fs")
 
     # Create particle 1
     particle1 = Particle(
