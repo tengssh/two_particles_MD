@@ -113,8 +113,8 @@ python -m pstats profile.prof
 
 ```
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-     1000    2.500    0.003    5.000    0.005 md_simulation.py:150(step)
-     1000    1.500    0.002    1.500    0.002 md_simulation.py:200(compute_forces)
+     1000    2.500    0.003    5.000    0.005 md_simulation.py:321(step)
+     1000    1.500    0.002    1.500    0.002 md_simulation.py:369(get_energies)
 ```
 
 - **ncalls**: Number of calls
@@ -363,10 +363,10 @@ profiler.open_in_browser()
  /_//_/// /_\ / //_// / //_'/ //     Duration: 5.234     CPU time: 5.180
 /   _/                      v4.0.3
 
-5.234 run  md_simulation.py:100
-└─ 3.500 step  md_simulation.py:150
-   ├─ 2.000 compute_forces  md_simulation.py:200
-   └─ 1.500 integrate  md_simulation.py:250
+5.234 run  md_simulation.py:413
+└─ 3.500 step  md_simulation.py:321
+   ├─ 2.000 _calculate_forces  md_simulation.py:252
+   └─ 1.500 get_energies  md_simulation.py:369
 ```
 
 ---
@@ -596,14 +596,14 @@ nvidia-smi -i 0 --query-gpu=utilization.gpu --format=csv -l 1
 # Step 1: Identify bottleneck with cProfile
 import cProfile
 cProfile.run('simulation.run(1000)', 'profile.prof')
-# Result: compute_forces() takes 80% of time
+# Result: step() takes 80% of time
 
 # Step 2: Line-level profiling
 from line_profiler import LineProfiler
 lp = LineProfiler()
-lp.add_function(simulation.compute_forces)
+lp.add_function(simulation.step)
 lp.run('simulation.run(100)')
-# Result: Line 150 (distance calculation) is slowest
+# Result: Line 352 (force calculation) is slowest
 
 # Step 3: Optimize the slow line
 # Before: r = np.sqrt(np.sum((pos1 - pos2)**2))
