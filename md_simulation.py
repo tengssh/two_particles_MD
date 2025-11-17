@@ -12,13 +12,30 @@ import numpy as np
 import matplotlib.pyplot as plt
 from typing import Tuple, List, Optional
 
-# Fix encoding for Windows console
-if sys.platform == 'win32':
+# Fix encoding for Windows console (but not when running under pytest or in tests)
+# This prevents UnicodeEncodeError on Windows with CP950/CP936 encoding
+if sys.platform == 'win32' and 'pytest' not in sys.modules and 'unittest' not in sys.modules:
     import io
-    if hasattr(sys.stdout, 'buffer'):
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-    if hasattr(sys.stderr, 'buffer'):
-        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+    # Only wrap if stdout/stderr have a buffer attribute (real console)
+    if (hasattr(sys.stdout, 'buffer') and
+        hasattr(sys.stderr, 'buffer') and
+        not isinstance(sys.stdout, io.TextIOWrapper)):
+        try:
+            sys.stdout = io.TextIOWrapper(
+                sys.stdout.buffer,
+                encoding='utf-8',
+                errors='replace',
+                line_buffering=True
+            )
+            sys.stderr = io.TextIOWrapper(
+                sys.stderr.buffer,
+                encoding='utf-8',
+                errors='replace',
+                line_buffering=True
+            )
+        except (AttributeError, ValueError, OSError):
+            # If wrapping fails, just continue without encoding fix
+            pass
 
 
 class Particle:

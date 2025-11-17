@@ -207,11 +207,23 @@ Most IDEs (VS Code, PyCharm, Jupyter) handle UTF-8 automatically.
 The code includes automatic encoding fixes for Windows:
 ```python
 # Already included in md_simulation.py
-if sys.platform == 'win32':
+# Only applies when running directly (not during tests)
+if sys.platform == 'win32' and 'pytest' not in sys.modules:
     import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+    sys.stdout = io.TextIOWrapper(
+        sys.stdout.buffer,
+        encoding='utf-8',
+        errors='replace',
+        line_buffering=True
+    )
+    sys.stderr = io.TextIOWrapper(
+        sys.stderr.buffer,
+        encoding='utf-8',
+        errors='replace',
+        line_buffering=True
+    )
 ```
 
 This ensures all output uses UTF-8 encoding, preventing crashes from Unicode characters.
+The fix is automatically disabled during testing to avoid interfering with pytest.
 
