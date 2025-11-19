@@ -84,13 +84,13 @@ pytest tests/test_your_feature.py -v
 
 ```bash
 # Format with black
-black md_simulation.py tests/
+black src/ tests/
 
 # Sort imports with isort
-isort md_simulation.py tests/
+isort src/ tests/
 
 # Check with flake8
-flake8 md_simulation.py tests/ --max-line-length=100
+flake8 src/ tests/ --max-line-length=100
 ```
 
 ### 5. Commit Your Changes
@@ -228,9 +228,9 @@ We use automated tools to maintain consistent style:
 
 ```bash
 # Auto-format before committing
-black md_simulation.py tests/
-isort md_simulation.py tests/
-flake8 md_simulation.py tests/ --max-line-length=100
+black src/ tests/
+isort src/ tests/
+flake8 src/ tests/ --max-line-length=100
 ```
 
 ### Import Order

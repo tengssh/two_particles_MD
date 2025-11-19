@@ -193,17 +193,28 @@ pip install -r requirements.txt
 
 ```
 two_particles_MD/
-├── md_simulation.py          # Main simulation code
-├── requirements.txt          # Python dependencies
-├── README.md                 # This file
-├── USAGE.md                  # Quick start guide
-├── TESTING.md                # Testing guide
+├── src/                      # Source code
+│   ├── __init__.py
+│   └── md_simulation.py      # Main simulation code
 ├── tests/                    # Test suite
 │   ├── __init__.py
 │   ├── README.md             # Test documentation
 │   ├── test_particle.py      # Particle class tests
 │   ├── test_potential.py     # Potential class tests
 │   └── test_simulation.py    # Simulation class tests
+├── examples/                 # Example scripts and notebooks
+│   ├── parallel_examples.py  # Parallelization examples
+│   ├── profile_md.py         # Profiling examples
+│   └── test_encoding.py      # Encoding test script
+├── docs/                     # Documentation
+│   ├── TESTING.md            # Testing guide
+│   ├── PROFILING_GUIDE.md    # Performance profiling guide
+│   ├── PARALLELIZATION_GUIDE.md  # Parallelization guide
+│   └── ...                   # Other documentation
+├── requirements.txt          # Python dependencies
+├── README.md                 # This file
+├── USAGE.md                  # Quick start guide
+├── CONTRIBUTING.md           # Contribution guidelines
 └── .github/
     └── workflows/            # CI/CD workflows
         ├── README.md         # Workflow documentation
@@ -250,8 +261,8 @@ MIT License - See LICENSE file for details
 
 While the current 2-particle system is already very fast, this project can be extended to N-body simulations with various parallelization techniques:
 
-- 📊 **[PARALLELIZATION_GUIDE.md](PARALLELIZATION_GUIDE.md)** - Comprehensive guide to parallelization strategies
-- 🔍 **[PROFILING_GUIDE.md](PROFILING_GUIDE.md)** - Performance profiling techniques and tools
+- 📊 **[PARALLELIZATION_GUIDE.md](docs/PARALLELIZATION_GUIDE.md)** - Comprehensive guide to parallelization strategies
+- 🔍 **[PROFILING_GUIDE.md](docs/PROFILING_GUIDE.md)** - Performance profiling techniques and tools
 - 💻 **[examples/parallel_examples.py](examples/parallel_examples.py)** - Runnable benchmarks and code examples
 - 📈 **[examples/profile_md.py](examples/profile_md.py)** - Performance profiling examples
 

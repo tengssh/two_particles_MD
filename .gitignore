@@ -1,7 +1,10 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*/__pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.pyo
 
 # C extensions
 *.so
@@ -48,6 +51,10 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+*/.pytest_cache/
+tests/__pycache__/
+src/__pycache__/
+examples/__pycache__/
 
 # Translations
 *.mo
@@ -74,6 +81,8 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*/.ipynb_checkpoints/
+examples/.ipynb_checkpoints/
 
 # IPython
 profile_default/
@@ -151,4 +160,24 @@ mpi_example.py
 *.tmp
 *.bak
 *.backup
+
+# Profiling output
+*.prof
+*.lprof
+profile_stats
+*.svg
+flamegraph.svg
+
+# Build artifacts
+*.o
+*.a
+*.lib
+*.dll
+*.exe
+
+# Editor temporary files
+.*.swp
+.*.swo
+*~.nib
+*.orig
 

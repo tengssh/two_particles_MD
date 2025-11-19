@@ -5,6 +5,11 @@ Quick test to verify encoding fix works without breaking tests
 """
 
 import sys
+import os
+
+# Add parent directory to path to import from src
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 print(f"Python version: {sys.version}")
 print(f"Platform: {sys.platform}")
 print(f"stdout encoding: {sys.stdout.encoding}")
@@ -12,7 +17,7 @@ print(f"stderr encoding: {sys.stderr.encoding}")
 print(f"pytest in modules: {'pytest' in sys.modules}")
 
 # Import the module
-from md_simulation import Particle, LennardJonesPotential, TwoParticleMD
+from src.md_simulation import Particle, LennardJonesPotential, TwoParticleMD
 import numpy as np
 
 print("\n" + "="*70)

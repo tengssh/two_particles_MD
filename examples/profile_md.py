@@ -25,10 +25,10 @@ import cProfile
 import pstats
 from io import StringIO
 
-# Add parent directory to path to import md_simulation
+# Add parent directory to path to import from src
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from md_simulation import TwoParticleMD, Particle, LennardJonesPotential
+from src.md_simulation import TwoParticleMD, Particle, LennardJonesPotential
 import numpy as np
 
 

@@ -6,10 +6,10 @@ import numpy as np
 import sys
 import os
 
-# Add parent directory to path to import md_simulation
+# Add parent directory to path to import from src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from md_simulation import Particle, LennardJonesPotential, TwoParticleMD
+from src.md_simulation import Particle, LennardJonesPotential, TwoParticleMD
 
 
 @pytest.fixture

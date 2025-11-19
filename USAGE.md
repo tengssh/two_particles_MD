@@ -4,6 +4,12 @@
 
 Simply run:
 ```bash
+python -m src.md_simulation
+```
+
+Or from the src directory:
+```bash
+cd src
 python md_simulation.py
 ```
 
@@ -188,13 +194,13 @@ sim.run(n_steps=1000, record_interval=10)  # Record every 10 steps
 **Option 1: Set Environment Variable (Recommended)**
 ```bash
 set PYTHONIOENCODING=utf-8
-python md_simulation.py
+python -m src.md_simulation
 ```
 
 **Option 2: Change Console Code Page**
 ```bash
 chcp 65001
-python md_simulation.py
+python -m src.md_simulation
 ```
 
 **Option 3: Use PowerShell Instead of CMD**
@@ -206,7 +212,7 @@ Most IDEs (VS Code, PyCharm, Jupyter) handle UTF-8 automatically.
 **Technical Details:**
 The code includes automatic encoding fixes for Windows:
 ```python
-# Already included in md_simulation.py
+# Already included in src/md_simulation.py
 # Only applies when running directly (not during tests)
 if sys.platform == 'win32' and 'pytest' not in sys.modules:
     import io
