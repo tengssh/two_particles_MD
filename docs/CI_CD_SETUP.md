@@ -1,6 +1,6 @@
 # CI/CD Setup Complete! 🚀
 
-> **Note**: This CI/CD infrastructure was created with assistance from **Augment Agent**, an AI coding assistant developed by Augment Code, based on Claude Sonnet 4.5 by Anthropic. See [`.github/AUGMENT_ATTRIBUTION.md`](.github/AUGMENT_ATTRIBUTION.md) for details.
+> **Note**: This CI/CD infrastructure was created with assistance from **Augment Agent**, an AI coding assistant developed by Augment Code, based on Claude Sonnet 4.5 by Anthropic. See [`.github/AUGMENT_ATTRIBUTION.md`](../.github/AUGMENT_ATTRIBUTION.md) for details.
 
 ## ✅ What Was Created
 

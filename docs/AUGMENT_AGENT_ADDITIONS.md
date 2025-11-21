@@ -273,12 +273,13 @@ This project was developed with assistance from **Augment Agent**.
 ```
 two_particles_MD/
 ├── README.md
-├── USAGE.md
-├── TESTING.md
-├── CONTRIBUTING.md
-├── CI_CD_SETUP.md
-├── DEPLOYMENT_CHECKLIST.md
-├── PROJECT_SUMMARY.md
+├── docs/
+│   ├── USAGE.md
+│   ├── TESTING.md
+│   ├── CONTRIBUTING.md
+│   ├── CI_CD_SETUP.md
+│   ├── DEPLOYMENT_CHECKLIST.md
+│   └── PROJECT_SUMMARY.md
 └── .github/
     ├── BADGES.md
     ├── QUICK_REFERENCE.md
@@ -290,14 +291,15 @@ two_particles_MD/
 ```
 two_particles_MD/
 ├── README.md                          ← MODIFIED
-├── USAGE.md
-├── TESTING.md
-├── CONTRIBUTING.md
-├── CI_CD_SETUP.md                     ← MODIFIED
-├── DEPLOYMENT_CHECKLIST.md
-├── PROJECT_SUMMARY.md                 ← MODIFIED
-├── DOCUMENTATION_INDEX.md             ← NEW
-├── AUGMENT_AGENT_ADDITIONS.md         ← NEW
+├── docs/
+│   ├── USAGE.md
+│   ├── TESTING.md
+│   ├── CONTRIBUTING.md
+│   ├── CI_CD_SETUP.md                 ← MODIFIED
+│   ├── DEPLOYMENT_CHECKLIST.md
+│   ├── PROJECT_SUMMARY.md             ← MODIFIED
+│   ├── DOCUMENTATION_INDEX.md         ← NEW
+│   └── AUGMENT_AGENT_ADDITIONS.md     ← NEW
 └── .github/
     ├── BADGES.md                      ← MODIFIED
     ├── QUICK_REFERENCE.md

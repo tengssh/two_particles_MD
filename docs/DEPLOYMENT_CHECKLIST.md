@@ -13,35 +13,35 @@ Use this checklist to deploy your project to GitHub with full CI/CD support.
 
 - [ ] Coverage is acceptable (currently 55%)
   ```bash
-  pytest tests/ --cov=md_simulation --cov-report=term
+  pytest tests/ --cov=src --cov-report=term
   ```
 
 - [ ] Code is formatted
   ```bash
-  black md_simulation.py tests/
+  black src/ tests/
   ```
 
 - [ ] Imports are sorted
   ```bash
-  isort md_simulation.py tests/
+  isort src/ tests/
   ```
 
 - [ ] No linting errors
   ```bash
-  flake8 md_simulation.py tests/ --max-line-length=100
+  flake8 src/ tests/ --max-line-length=100
   ```
 
 - [ ] Simulation runs without errors
   ```bash
-  python md_simulation.py
+  python -m src.md_simulation
   ```
 
 ### Documentation Review
 
 - [ ] README.md is complete and accurate
-- [ ] USAGE.md has correct examples
-- [ ] TESTING.md explains how to run tests
-- [ ] CONTRIBUTING.md has clear guidelines
+- [ ] docs/USAGE.md has correct examples
+- [ ] docs/TESTING.md explains how to run tests
+- [ ] docs/CONTRIBUTING.md has clear guidelines
 - [ ] All code has docstrings
 
 ## 🚀 GitHub Deployment

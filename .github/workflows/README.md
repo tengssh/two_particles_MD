@@ -125,7 +125,7 @@ pip install -r requirements.txt
 pytest tests/ -v
 
 # Run with coverage
-pytest tests/ --cov=md_simulation --cov-report=term --cov-report=html
+pytest tests/ --cov=src --cov-report=term --cov-report=html
 ```
 
 ## Troubleshooting
@@ -146,13 +146,13 @@ pytest tests/ --cov=md_simulation --cov-report=term --cov-report=html
 
 ```bash
 # Fix formatting with black
-black md_simulation.py tests/
+black src/ tests/
 
 # Fix import sorting with isort
-isort md_simulation.py tests/
+isort src/ tests/
 
 # Check flake8 issues
-flake8 md_simulation.py tests/ --max-line-length=100
+flake8 src/ tests/ --max-line-length=100
 ```
 
 ## Best Practices

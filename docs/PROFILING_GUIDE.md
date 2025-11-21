@@ -100,7 +100,7 @@ stats.print_stats(20)  # Show top 20 functions
 
 ```bash
 # Profile script
-python -m cProfile -o profile.prof md_simulation.py
+python -m cProfile -o profile.prof -m src.md_simulation
 
 # View results
 python -m pstats profile.prof
@@ -274,13 +274,13 @@ pip install py-spy
 py-spy top --pid 12345
 
 # Generate flame graph
-py-spy record -o profile.svg -- python md_simulation.py
+py-spy record -o profile.svg -- python -m src.md_simulation
 
 # Sample running process for 60 seconds
 py-spy record --pid 12345 --duration 60 -o profile.svg
 
 # Profile with native extensions
-py-spy record --native -o profile.svg -- python md_simulation.py
+py-spy record --native -o profile.svg -- python -m src.md_simulation
 ```
 
 #### Features
@@ -307,7 +307,7 @@ pip install snakeviz
 
 ```bash
 # Generate profile
-python -m cProfile -o profile.prof md_simulation.py
+python -m cProfile -o profile.prof -m src.md_simulation
 
 # Visualize in browser
 snakeviz profile.prof
@@ -508,7 +508,7 @@ paraprof
 
 ```bash
 # Record profile with call graph
-perf record -g python md_simulation.py
+perf record -g python -m src.md_simulation
 
 # View report
 perf report
@@ -517,7 +517,7 @@ perf report
 perf script | stackcollapse-perf.pl | flamegraph.pl > perf.svg
 
 # Profile specific events
-perf stat -e cache-misses,cache-references python md_simulation.py
+perf stat -e cache-misses,cache-references python -m src.md_simulation
 ```
 
 ---

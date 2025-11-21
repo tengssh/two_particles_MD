@@ -18,7 +18,13 @@ two_particles_MD/
 │   │   └── feature_request.md        # Feature request template
 │   ├── pull_request_template.md      # PR template
 │   ├── BADGES.md                     # Badge templates for README
-│   └── QUICK_REFERENCE.md            # Quick reference for CI/CD commands
+│   ├── QUICK_REFERENCE.md            # Quick reference for CI/CD commands
+│   ├── AUGMENT_ATTRIBUTION.md        # AI attribution
+│   └── AI_DEVELOPMENT_WORKFLOW.md    # AI development workflow
+│
+├── src/                              # Source code
+│   ├── __init__.py                   # Package marker
+│   └── md_simulation.py              # Main simulation code
 │
 ├── tests/                            # Test suite (pytest)
 │   ├── __init__.py                   # Package marker
@@ -27,14 +33,29 @@ two_particles_MD/
 │   ├── test_simulation.py            # Simulation tests (9 tests)
 │   └── README.md                     # Testing documentation
 │
-├── md_simulation.py                  # Main simulation code
+├── examples/                         # Example scripts and notebooks
+│   ├── parallel_examples.py          # Parallelization examples
+│   ├── profile_md.py                 # Profiling examples
+│   ├── test_encoding.py              # Encoding test script
+│   └── README.md                     # Examples documentation
+│
+├── docs/                             # Documentation
+│   ├── USAGE.md                      # Quick start guide
+│   ├── CONTRIBUTING.md               # Contribution guidelines
+│   ├── TESTING.md                    # Testing guide
+│   ├── CI_CD_SETUP.md                # CI/CD setup guide
+│   ├── PROJECT_SUMMARY.md            # This file
+│   ├── DEPLOYMENT_CHECKLIST.md       # Deployment checklist
+│   ├── DOCUMENTATION_INDEX.md        # Documentation index
+│   ├── PROFILING_GUIDE.md            # Profiling guide
+│   ├── PARALLELIZATION_GUIDE.md      # Parallelization guide
+│   ├── AUGMENT_AGENT_ADDITIONS.md    # AI additions summary
+│   └── MPI_INSTALLATION.md           # MPI installation guide
+│
 ├── requirements.txt                  # Python dependencies
 ├── README.md                         # Project documentation
-├── USAGE.md                          # Quick start guide
-├── TESTING.md                        # Testing guide
-├── CONTRIBUTING.md                   # Contribution guidelines
-├── CI_CD_SETUP.md                    # CI/CD setup guide
-└── PROJECT_SUMMARY.md                # This file
+├── LICENSE                           # MIT License
+└── .gitignore                        # Git ignore rules
 
 ```
 
@@ -191,13 +212,13 @@ cd two_particles_MD
 pip install -r requirements.txt
 
 # Run simulation
-python md_simulation.py
+python -m src.md_simulation
 
 # Run tests
 pytest tests/ -v
 
 # Check coverage
-pytest tests/ --cov=md_simulation --cov-report=term
+pytest tests/ --cov=src --cov-report=term
 ```
 
 ### 2. Making Changes
@@ -210,8 +231,8 @@ git checkout -b feature/new-feature
 # ... edit files ...
 
 # Format code
-black md_simulation.py tests/
-isort md_simulation.py tests/
+black src/ tests/
+isort src/ tests/
 
 # Run tests
 pytest tests/ -v
@@ -234,15 +255,15 @@ git push origin feature/new-feature
 
 ### User Documentation
 
-1. **README.md** - Main project documentation
-2. **USAGE.md** - Quick start guide
-3. **TESTING.md** - Testing guide with examples
+1. **README.md** - Main project documentation (root)
+2. **docs/USAGE.md** - Quick start guide
+3. **docs/TESTING.md** - Testing guide with examples
 
 ### Developer Documentation
 
-4. **CONTRIBUTING.md** - Contribution guidelines
-5. **CI_CD_SETUP.md** - CI/CD setup instructions
-6. **PROJECT_SUMMARY.md** - This file
+4. **docs/CONTRIBUTING.md** - Contribution guidelines
+5. **docs/CI_CD_SETUP.md** - CI/CD setup instructions
+6. **docs/PROJECT_SUMMARY.md** - This file
 
 ### Reference Documentation
 

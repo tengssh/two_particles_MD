@@ -9,7 +9,7 @@
 pytest tests/ -v
 
 # Run with coverage
-pytest tests/ --cov=md_simulation --cov-report=term
+pytest tests/ --cov=src --cov-report=term
 
 # Run specific test file
 pytest tests/test_particle.py -v
@@ -31,19 +31,19 @@ pytest tests/ --lf
 
 ```bash
 # Check formatting with black
-black --check md_simulation.py tests/
+black --check src/ tests/
 
 # Auto-fix formatting
-black md_simulation.py tests/
+black src/ tests/
 
 # Check import sorting
-isort --check-only md_simulation.py tests/
+isort --check-only src/ tests/
 
 # Auto-fix imports
-isort md_simulation.py tests/
+isort src/ tests/
 
 # Check with flake8
-flake8 md_simulation.py tests/ --max-line-length=100
+flake8 src/ tests/ --max-line-length=100
 ```
 
 ### Git Workflow

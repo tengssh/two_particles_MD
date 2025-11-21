@@ -68,7 +68,7 @@ pytest tests/test_potential.py::test_force_vector_attractive
 
 ### Run with coverage report:
 ```bash
-pytest tests/ --cov=md_simulation --cov-report=html
+pytest tests/ --cov=src --cov-report=html
 ```
 
 ### Run with detailed output:

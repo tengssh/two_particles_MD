@@ -40,8 +40,8 @@ Complete guide to all documentation in this project.
 
 | Document | Description | Audience |
 |----------|-------------|----------|
-| [.github/QUICK_REFERENCE.md](.github/QUICK_REFERENCE.md) | Command reference card | Developers |
-| [.github/BADGES.md](.github/BADGES.md) | Badge templates | Maintainers |
+| [.github/QUICK_REFERENCE.md](../.github/QUICK_REFERENCE.md) | Command reference card | Developers |
+| [.github/BADGES.md](../.github/BADGES.md) | Badge templates | Maintainers |
 
 ### ⚡ Performance & Optimization
 
@@ -60,16 +60,16 @@ Complete guide to all documentation in this project.
 
 | Document | Description | Audience |
 |----------|-------------|----------|
-| [.github/AUGMENT_ATTRIBUTION.md](.github/AUGMENT_ATTRIBUTION.md) | AI contribution details | Everyone |
-| [.github/AI_DEVELOPMENT_WORKFLOW.md](.github/AI_DEVELOPMENT_WORKFLOW.md) | Development process | Developers |
+| [.github/AUGMENT_ATTRIBUTION.md](../.github/AUGMENT_ATTRIBUTION.md) | AI contribution details | Everyone |
+| [.github/AI_DEVELOPMENT_WORKFLOW.md](../.github/AI_DEVELOPMENT_WORKFLOW.md) | Development process | Developers |
 
 ### 📋 Templates
 
 | Document | Description | Audience |
 |----------|-------------|----------|
-| [.github/pull_request_template.md](.github/pull_request_template.md) | PR template | Contributors |
-| [.github/ISSUE_TEMPLATE/bug_report.md](.github/ISSUE_TEMPLATE/bug_report.md) | Bug report template | Users |
-| [.github/ISSUE_TEMPLATE/feature_request.md](.github/ISSUE_TEMPLATE/feature_request.md) | Feature request template | Users |
+| [.github/pull_request_template.md](../.github/pull_request_template.md) | PR template | Contributors |
+| [.github/ISSUE_TEMPLATE/bug_report.md](../.github/ISSUE_TEMPLATE/bug_report.md) | Bug report template | Users |
+| [.github/ISSUE_TEMPLATE/feature_request.md](../.github/ISSUE_TEMPLATE/feature_request.md) | Feature request template | Users |
 
 ## 🎓 Learning Paths
 
