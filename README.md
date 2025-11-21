@@ -8,8 +8,8 @@
 
 ## Overview
 This is an educational implementation of a simplified molecular dynamics (MD) simulation featuring:
-- **Two moving particles** starting at random positions (based on random seed)
-- **Same initial velocity** for both particles
+- **Two particles** starting at random positions (based on random seed)
+- **Custom initial velocities** for each particle (configurable)
 - **Lennard-Jones potential** for particle interactions
 - **Elastic wall collisions** to keep particles in the box
 - **Comprehensive test suite** with pytest (32 tests, 55% coverage)
@@ -59,22 +59,28 @@ Note:
 
 ## Running the Simulation
 
-```python
+```bash
+python -m src.md_simulation
+```
+
+Or from the src directory:
+```bash
+cd src
 python md_simulation.py
 ```
 
 This will:
 1. Create a 20×20 Angstrom box
 2. Generate random starting positions for both particles (using seed 42)
-3. Give both particles the same initial velocity (0.02, 0.02) Å/fs
+3. Set custom initial velocities for each particle
 4. Simulate for 5000 time steps (5 picoseconds)
-5. Generate three plots showing trajectories, energy, and distance
+5. Generate plots showing trajectories, energy, and distance
 
 ## Example Usage
 
 ```python
 import numpy as np
-from md_simulation import Particle, LennardJonesPotential, TwoParticleMD
+from src.md_simulation import Particle, LennardJonesPotential, TwoParticleMD
 
 # Set random seed for reproducibility
 np.random.seed(42)
@@ -86,20 +92,23 @@ lj = LennardJonesPotential(epsilon=0.238, sigma=3.4)
 pos1 = np.array([7.99, 17.21])
 pos2 = np.array([13.71, 11.58])
 
-# Same initial velocity for both particles
-initial_velocity = np.array([0.02, 0.02])
+# Custom initial velocities for each particle
+velocity1 = np.array([0.02, 0.02])  # Particle 1 moving
+velocity2 = np.array([0.0, 0.0])    # Particle 2 initially at rest
 
 # Create particles
 particle1 = Particle(
     position=pos1,
-    velocity=initial_velocity.copy(),
-    mass=39.948
+    velocity=velocity1,
+    mass=39.948,
+    is_fixed=False
 )
 
 particle2 = Particle(
     position=pos2,
-    velocity=initial_velocity.copy(),
-    mass=39.948
+    velocity=velocity2,
+    mass=39.948,
+    is_fixed=True  # Can be set to False for two moving particles
 )
 
 # Run simulation
@@ -121,11 +130,11 @@ sim.plot_distance()
 - **Energy conservation**: Why it matters and how to check it
 
 ### Key Observations
-1. **Wall bounces**: Both particles' velocities reverse at boundaries
+1. **Wall bounces**: Particles' velocities reverse at boundaries (for non-fixed particles)
 2. **Particle interaction**: Attraction at long range, repulsion at short range
 3. **Energy conservation**: Total energy should remain nearly constant
-4. **Trajectory comparison**: Both particles start with same velocity but follow different paths due to different positions and interactions
-5. **Collision dynamics**: Particles may collide, scatter, or orbit each other
+4. **Trajectory comparison**: Particles follow different paths based on their initial velocities and positions
+5. **Collision dynamics**: Particles may collide, scatter, or orbit each other depending on initial conditions
 
 ## Parameters
 
@@ -159,7 +168,7 @@ pip install -r requirements.txt
 pytest tests/ -v
 
 # Run with coverage
-pytest tests/ --cov=md_simulation --cov-report=term
+pytest tests/ --cov=src --cov-report=term
 ```
 
 **Test Coverage:**
@@ -207,14 +216,14 @@ two_particles_MD/
 │   ├── profile_md.py         # Profiling examples
 │   └── test_encoding.py      # Encoding test script
 ├── docs/                     # Documentation
+│   ├── USAGE.md              # Quick start guide
+│   ├── CONTRIBUTING.md       # Contribution guidelines
 │   ├── TESTING.md            # Testing guide
 │   ├── PROFILING_GUIDE.md    # Performance profiling guide
 │   ├── PARALLELIZATION_GUIDE.md  # Parallelization guide
 │   └── ...                   # Other documentation
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # This file
-├── USAGE.md                  # Quick start guide
-├── CONTRIBUTING.md           # Contribution guidelines
 └── .github/
     └── workflows/            # CI/CD workflows
         ├── README.md         # Workflow documentation
@@ -300,5 +309,9 @@ This repository maintains the following branches:
 
 ## Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
+
+## Quick Start
+
+For a quick start guide, see [USAGE.md](docs/USAGE.md).
 

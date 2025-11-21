@@ -366,7 +366,7 @@ Use the PR template: `.github/pull_request_template.md`
 
 - **Issues**: Open an issue for bugs or questions
 - **Discussions**: Use GitHub Discussions for general questions
-- **Documentation**: Check README.md and other docs
+- **Documentation**: Check [README.md](../README.md), [USAGE.md](USAGE.md), and [TESTING.md](TESTING.md)
 
 ## 🎉 Recognition
 

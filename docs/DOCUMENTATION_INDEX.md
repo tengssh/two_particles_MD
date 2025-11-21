@@ -6,9 +6,9 @@ Complete guide to all documentation in this project.
 
 **New to this project?** Start here:
 
-1. **[README.md](README.md)** - Project overview and main documentation
+1. **[README.md](../README.md)** - Project overview and main documentation
 2. **[USAGE.md](USAGE.md)** - Quick start guide with examples
-3. **Run the simulation**: `python md_simulation.py`
+3. **Run the simulation**: `python -m src.md_simulation`
 
 ## 📚 Documentation by Category
 
@@ -16,7 +16,7 @@ Complete guide to all documentation in this project.
 
 | Document | Description | Audience |
 |----------|-------------|----------|
-| [README.md](README.md) | Main project documentation | Everyone |
+| [README.md](../README.md) | Main project documentation | Everyone |
 | [USAGE.md](USAGE.md) | Quick start guide | New users |
 | [TESTING.md](TESTING.md) | How to run tests | Users & Developers |
 
@@ -25,8 +25,8 @@ Complete guide to all documentation in this project.
 | Document | Description | Audience |
 |----------|-------------|----------|
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution guidelines | Contributors |
-| [tests/README.md](tests/README.md) | Test suite documentation | Developers |
-| [.github/workflows/README.md](.github/workflows/README.md) | CI/CD workflow docs | DevOps |
+| [tests/README.md](../tests/README.md) | Test suite documentation | Developers |
+| [.github/workflows/README.md](../.github/workflows/README.md) | CI/CD workflow docs | DevOps |
 
 ### 🚀 Deployment & Setup
 
@@ -49,13 +49,12 @@ Complete guide to all documentation in this project.
 |----------|-------------|----------|
 | [PARALLELIZATION_GUIDE.md](PARALLELIZATION_GUIDE.md) | Comprehensive parallelization guide | Developers |
 | [PROFILING_GUIDE.md](PROFILING_GUIDE.md) | Performance profiling techniques | Developers |
-| [examples/parallel_examples.py](examples/parallel_examples.py) | Parallelization benchmarks | Developers |
-| [examples/profile_md.py](examples/profile_md.py) | Profiling examples | Developers |
-| [examples/profiling_examples.ipynb](examples/profiling_examples.ipynb) | Interactive profiling notebook | Developers |
-| [examples/parallel_examples.py](examples/parallel_examples.py) | Runnable benchmarks | Developers |
-| [examples/README.md](examples/README.md) | Examples documentation | Developers |
-| [docs/MPI_INSTALLATION.md](docs/MPI_INSTALLATION.md) | MPI installation guide | HPC Users |
-| [requirements.txt](requirements.txt) | Core + optional packages | All Users |
+| [examples/parallel_examples.py](../examples/parallel_examples.py) | Parallelization benchmarks | Developers |
+| [examples/profile_md.py](../examples/profile_md.py) | Profiling examples | Developers |
+| [examples/profiling_examples.ipynb](../examples/profiling_examples.ipynb) | Interactive profiling notebook | Developers |
+| [examples/README.md](../examples/README.md) | Examples documentation | Developers |
+| [MPI_INSTALLATION.md](MPI_INSTALLATION.md) | MPI installation guide | HPC Users |
+| [requirements.txt](../requirements.txt) | Core + optional packages | All Users |
 
 ### 🤖 AI-Assisted Development
 
@@ -81,7 +80,7 @@ Complete guide to all documentation in this project.
    ↓
 2. USAGE.md (Quick start)
    ↓
-3. Run: python md_simulation.py
+3. Run: python -m src.md_simulation
    ↓
 4. Modify parameters and experiment
 ```

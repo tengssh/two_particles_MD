@@ -18,7 +18,7 @@ python md_simulation.py
 ### 1. **Initialization**
 - Random seed is set to 42 (for reproducibility)
 - Two particles are placed at random positions in a 20×20 Å box
-- Both particles get the **same initial velocity**: [0.02, 0.02] Å/fs
+- **Custom initial velocities** for each particle (configurable)
 - Minimum separation of 2×σ (6.8 Å) is enforced to avoid extreme forces
 
 ### 2. **Simulation**
@@ -56,9 +56,15 @@ random_seed = 123  # Try different values
 np.random.seed(random_seed)
 ```
 
-### Change Initial Velocity
+### Change Initial Velocities
 ```python
-initial_velocity = np.array([0.01, 0.03])  # Different x and y components
+# Set different velocities for each particle
+velocity1 = np.array([0.01, 0.03])  # Particle 1
+velocity2 = np.array([0.02, -0.01]) # Particle 2
+
+# Or make both particles move with same velocity
+velocity1 = np.array([0.02, 0.02])
+velocity2 = np.array([0.02, 0.02])
 ```
 
 ### Change Box Size
@@ -93,7 +99,7 @@ Random seed: 42
 Particle 1 starting position: [7.99, 17.21]
 Particle 2 starting position: [13.71, 11.58]
 Initial separation: 8.03 Angstroms
-Initial velocity (both): [0.020, 0.020] A/fs
+Initial velocity (particle 1): [0.020, 0.020] A/fs
 Starting 2D box simulation for 5000 steps (dt=1.0 fs)...
 Total simulation time: 5000.000 fs
 Box size: 20.0 x 20.0 Angstroms
