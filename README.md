@@ -224,6 +224,8 @@ two_particles_MD/
 │   └── ...                   # Other documentation
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # This file
+├── LICENSE                   # MIT License
+├── .gitignore                # Git ignore rules
 └── .github/
     └── workflows/            # CI/CD workflows
         ├── README.md         # Workflow documentation
@@ -264,7 +266,16 @@ This project demonstrates the capabilities of AI-assisted software development, 
 
 ## License
 
-MIT License - See LICENSE file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+
+- ✅ **Commercial use** - Use for commercial purposes
+- ✅ **Modification** - Modify the software
+- ✅ **Distribution** - Distribute the software
+- ✅ **Private use** - Use privately
+- ⚠️ **Liability** - No warranty provided
+- ⚠️ **Attribution** - Must include copyright notice
 
 ## Performance & Parallelization
 
