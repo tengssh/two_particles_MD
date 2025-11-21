@@ -380,6 +380,13 @@ class TwoParticleMD:
                                         0.5 * old_accel2 * self.dt ** 2)
 
         # Handle wall collisions (elastic bounces) for both particles
+        # Note: Wall collision handling does introduce small numerical errors because:
+        # 1. We clamp positions to boundaries (pos = 0 or pos = width/height)
+        # 2. This slightly violates energy conservation (particle may have penetrated wall)
+        # 3. However, errors are O(dt^2) and acceptable for educational purposes
+        # 4. For production code, consider: collision detection before position update,
+        #    or more sophisticated boundary conditions (e.g., reflective boundaries with
+        #    exact collision time calculation)
         self._handle_wall_collisions(self.particle1, 'wall_collision_count_1')
         self._handle_wall_collisions(self.particle2, 'wall_collision_count_2')
 
@@ -418,6 +425,10 @@ class TwoParticleMD:
 
         # Potential energy: depends on distance between particles
         r_vector = self.particle1.position - self.particle2.position
+        # Calculate distance using Euclidean norm: r = sqrt(dx^2 + dy^2)
+        # np.linalg.norm computes the L2 norm (Euclidean distance) of the vector
+        # This is the scalar distance needed for the Lennard-Jones potential U(r)
+        # Alternative: r = np.sqrt(np.sum(r_vector**2)) or r = np.sqrt(r_vector @ r_vector)
         r = np.linalg.norm(r_vector)
         pe = self.potential.potential(r)
 
