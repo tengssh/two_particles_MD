@@ -198,6 +198,19 @@ Install all dependencies:
 pip install -r requirements.txt
 ```
 
+## Documentation
+
+### 📚 Complete Documentation Index
+- **[DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md)** - Complete index of all documentation files
+- **[PROJECT_SUMMARY.md](docs/PROJECT_SUMMARY.md)** - Comprehensive project overview with code structure diagrams
+
+### 📖 Quick Links
+- **[USAGE.md](docs/USAGE.md)** - Quick start guide
+- **[CONTRIBUTING.md](docs/CONTRIBUTING.md)** - Contribution guidelines
+- **[TESTING.md](docs/TESTING.md)** - Testing guide
+- **[PROFILING_GUIDE.md](docs/PROFILING_GUIDE.md)** - Performance profiling guide
+- **[PARALLELIZATION_GUIDE.md](docs/PARALLELIZATION_GUIDE.md)** - Parallelization guide
+
 ## Project Structure
 
 ```
@@ -216,12 +229,14 @@ two_particles_MD/
 │   ├── profile_md.py         # Profiling examples
 │   └── test_encoding.py      # Encoding test script
 ├── docs/                     # Documentation
-│   ├── USAGE.md              # Quick start guide
-│   ├── CONTRIBUTING.md       # Contribution guidelines
-│   ├── TESTING.md            # Testing guide
-│   ├── PROFILING_GUIDE.md    # Performance profiling guide
+│   ├── DOCUMENTATION_INDEX.md    # Complete documentation index
+│   ├── PROJECT_SUMMARY.md        # Project overview with diagrams
+│   ├── USAGE.md                  # Quick start guide
+│   ├── CONTRIBUTING.md           # Contribution guidelines
+│   ├── TESTING.md                # Testing guide
+│   ├── PROFILING_GUIDE.md        # Performance profiling guide
 │   ├── PARALLELIZATION_GUIDE.md  # Parallelization guide
-│   └── ...                   # Other documentation
+│   └── ...                       # Other documentation
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # This file
 ├── LICENSE                   # MIT License
