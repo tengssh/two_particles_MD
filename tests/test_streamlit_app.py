@@ -8,6 +8,9 @@ import pytest
 import sys
 import os
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend for CI
+import matplotlib.pyplot as plt
 
 # Add parent directory to path to import from src
 _current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +26,14 @@ from streamlit.testing.v1 import AppTest
 
 # Path to the streamlit app
 APP_PATH = os.path.join(_src_dir, 'streamlit_app.py')
+
+
+@pytest.fixture(autouse=True)
+def cleanup_matplotlib():
+    """Ensure all matplotlib figures are closed after each test."""
+    yield
+    plt.close('all')
+
 
 
 class TestAppLoads:
