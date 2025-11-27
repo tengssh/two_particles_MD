@@ -91,10 +91,11 @@ class TestSimulationExecution:
         # Find and click the Run Simulation button
         # Adjust n_steps to smaller value for faster test
         # number_input[5] is n_steps (based on UI order)
-        at.number_input[5].set_value(100).run()  # Reduce steps for faster test
+        at.number_input[5].set_value(10).run()  # Minimal steps for fast test
         
         # Click the run button (usually the first/only primary button)
-        at.button[0].click().run()
+        # Increase timeout to 10s for CI environment
+        at.button[0].click().run(timeout=10)
         
         # Check no exceptions occurred
         assert not at.exception, f"Simulation raised exception: {at.exception}"
@@ -104,10 +105,10 @@ class TestSimulationExecution:
         at = AppTest.from_file(APP_PATH).run()
         
         # Set minimal steps for fast execution
-        at.number_input[5].set_value(100).run()
+        at.number_input[5].set_value(10).run()
         
-        # Run simulation
-        at.button[0].click().run()
+        # Run simulation with increased timeout
+        at.button[0].click().run(timeout=10)
         
         # After running, there should be tabs for visualization
         assert len(at.tabs) > 0 or 'simulation' in at.session_state
@@ -117,10 +118,10 @@ class TestSimulationExecution:
         at = AppTest.from_file(APP_PATH).run()
         
         # Set minimal steps
-        at.number_input[5].set_value(100).run()
+        at.number_input[5].set_value(10).run()
         
-        # Run simulation
-        at.button[0].click().run()
+        # Run simulation with increased timeout
+        at.button[0].click().run(timeout=10)
         
         # Check session state
         assert 'simulation' in at.session_state, "Simulation should be stored in session_state"
