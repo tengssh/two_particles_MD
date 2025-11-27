@@ -9,7 +9,18 @@ This app provides an interactive interface to:
 
 import streamlit as st
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+import sys
+import os
+
+# Add the src directory to the path for imports
+_src_dir = os.path.dirname(os.path.abspath(__file__))
+if _src_dir not in sys.path:
+    sys.path.insert(0, _src_dir)
+
 from md_simulation import Particle, LennardJonesPotential, TwoParticleMD
 
 
@@ -91,24 +102,169 @@ def create_distance_figure(sim):
     """Create distance plot and return the figure."""
     if len(sim.history['pos1']) == 0:
         return None
-    
+
     pos1 = np.array(sim.history['pos1'])
     pos2 = np.array(sim.history['pos2'])
     distances = np.linalg.norm(pos1 - pos2, axis=1)
-    
+
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(sim.history['time'], distances, 'purple', linewidth=1.5)
     ax.set_xlabel('Time (fs)', fontsize=12)
     ax.set_ylabel('Distance (Angstrom)', fontsize=12)
     ax.set_title('Inter-particle Distance vs Time', fontsize=14)
     ax.grid(True, alpha=0.3)
-    
+
     # Add reference line for equilibrium distance
     r_eq = 2 ** (1/6) * sim.potential.sigma
     ax.axhline(y=r_eq, color='red', linestyle='--', label=f'Equilibrium distance = {r_eq:.3f} A')
     ax.legend(fontsize=10)
-    
+
     plt.tight_layout()
+    return fig
+
+
+def create_plotly_animated_trajectory(sim, frame_step=10):
+    """Create Plotly animated trajectory with growing paths, slider and play/pause controls.
+
+    Args:
+        sim: TwoParticleMD simulation object with history
+        frame_step: Step size for animation frames (to reduce total frames)
+
+    Returns:
+        Plotly figure with animation slider and controls
+    """
+    if len(sim.history['pos1']) == 0:
+        return None
+
+    pos1 = np.array(sim.history['pos1'])
+    pos2 = np.array(sim.history['pos2'])
+    times = sim.history['time']
+    width, height = sim.box_size
+
+    n_frames = len(pos1)
+    # Sample frames to keep animation smooth
+    frame_indices = list(range(0, n_frames, max(1, frame_step)))
+    if frame_indices[-1] != n_frames - 1:
+        frame_indices.append(n_frames - 1)
+
+    # Build DataFrame for Plotly Express to get working slider infrastructure
+    data_rows = []
+    for idx in frame_indices:
+        time_label = f"{times[idx]:.1f} fs"
+        data_rows.append({
+            'x': pos1[idx, 0], 'y': pos1[idx, 1],
+            'particle': 'Particle 1', 'frame': time_label, 'frame_idx': idx
+        })
+        data_rows.append({
+            'x': pos2[idx, 0], 'y': pos2[idx, 1],
+            'particle': 'Particle 2', 'frame': time_label, 'frame_idx': idx
+        })
+
+    df = pd.DataFrame(data_rows)
+
+    # Create base figure with Plotly Express (this gives us working slider)
+    fig = px.scatter(
+        df, x='x', y='y', color='particle', animation_frame='frame',
+        color_discrete_map={'Particle 1': 'blue', 'Particle 2': 'red'},
+        range_x=[-0.5, width + 0.5], range_y=[-0.5, height + 0.5],
+        title='Particle Trajectory Animation',
+        labels={'x': 'X (Angstrom)', 'y': 'Y (Angstrom)'},
+    )
+
+    # Make current position markers larger
+    fig.update_traces(marker=dict(size=18, line=dict(width=2, color='DarkSlateGrey')))
+
+    # Add box boundary as static shape
+    fig.add_shape(type="rect", x0=0, y0=0, x1=width, y1=height,
+                  line=dict(color="black", width=2))
+
+    # Add start position markers (static, will appear in all frames)
+    fig.add_trace(go.Scatter(
+        x=[pos1[0, 0]], y=[pos1[0, 1]], mode='markers',
+        marker=dict(symbol='x', size=15, color='blue', line=dict(width=2)),
+        name='Start 1', showlegend=True
+    ))
+    fig.add_trace(go.Scatter(
+        x=[pos2[0, 0]], y=[pos2[0, 1]], mode='markers',
+        marker=dict(symbol='x', size=15, color='red', line=dict(width=2)),
+        name='Start 2', showlegend=True
+    ))
+
+    # Add initial trajectory traces (empty, will be populated in frames)
+    fig.add_trace(go.Scatter(
+        x=[pos1[0, 0]], y=[pos1[0, 1]], mode='lines',
+        line=dict(color='blue', width=2), opacity=0.6,
+        name='Path 1', showlegend=True
+    ))
+    fig.add_trace(go.Scatter(
+        x=[pos2[0, 0]], y=[pos2[0, 1]], mode='lines',
+        line=dict(color='red', width=2), opacity=0.6,
+        name='Path 2', showlegend=True
+    ))
+
+    # Now modify each frame to include growing trajectory paths
+    # The px.scatter creates frames with 2 traces (Particle 1, Particle 2)
+    # We need to add: Start1, Start2, Path1, Path2 to each frame
+    for i, frame in enumerate(fig.frames):
+        idx = frame_indices[i]
+        # Get existing particle position traces from the frame
+        existing_data = list(frame.data)
+
+        # Add static start markers
+        existing_data.append(go.Scatter(
+            x=[pos1[0, 0]], y=[pos1[0, 1]], mode='markers',
+            marker=dict(symbol='x', size=15, color='blue', line=dict(width=2)),
+            name='Start 1'
+        ))
+        existing_data.append(go.Scatter(
+            x=[pos2[0, 0]], y=[pos2[0, 1]], mode='markers',
+            marker=dict(symbol='x', size=15, color='red', line=dict(width=2)),
+            name='Start 2'
+        ))
+
+        # Add growing trajectory paths (up to current frame)
+        existing_data.append(go.Scatter(
+            x=pos1[:idx+1, 0].tolist(), y=pos1[:idx+1, 1].tolist(),
+            mode='lines', line=dict(color='blue', width=2), opacity=0.6,
+            name='Path 1'
+        ))
+        existing_data.append(go.Scatter(
+            x=pos2[:idx+1, 0].tolist(), y=pos2[:idx+1, 1].tolist(),
+            mode='lines', line=dict(color='red', width=2), opacity=0.6,
+            name='Path 2'
+        ))
+
+        # Update the frame with new data
+        frame.data = tuple(existing_data)
+
+    # Update layout
+    fig.update_layout(
+        height=650,
+        xaxis=dict(scaleanchor='y', scaleratio=1),
+        legend=dict(x=1.02, y=0.5, xanchor='left'),
+        updatemenus=[{
+            'buttons': [
+                {'args': [None, {'frame': {'duration': 100, 'redraw': True},
+                                'fromcurrent': True, 'transition': {'duration': 0}}],
+                 'label': '▶ Play', 'method': 'animate'},
+                {'args': [[None], {'frame': {'duration': 0, 'redraw': False},
+                                  'mode': 'immediate', 'transition': {'duration': 0}}],
+                 'label': '⏸ Pause', 'method': 'animate'}
+            ],
+            'direction': 'left', 'pad': {'r': 10, 't': 70},
+            'showactive': False, 'type': 'buttons',
+            'x': 0.1, 'xanchor': 'right', 'y': 0, 'yanchor': 'top'
+        }],
+        sliders=[{
+            'active': 0, 'yanchor': 'top', 'xanchor': 'left',
+            'currentvalue': {'font': {'size': 14}, 'prefix': 'Time: ',
+                           'visible': True, 'xanchor': 'center'},
+            'transition': {'duration': 0}, 'pad': {'b': 10, 't': 50},
+            'len': 0.9, 'x': 0.1, 'y': 0,
+            'steps': fig.layout.sliders[0].steps if fig.layout.sliders else []
+        }]
+    )
+
     return fig
 
 
@@ -118,68 +274,61 @@ def main():
         page_icon="🔬",
         layout="wide"
     )
-    
+
+    # ==================== TOP SECTION: Title and Description ====================
     st.title("🔬 Two-Particle Molecular Dynamics Simulation")
-    st.markdown("Interactive simulation of two particles interacting via Lennard-Jones potential in a 2D box.")
-    
-    # Sidebar for parameters
-    st.sidebar.header("⚙️ Simulation Parameters")
-    
-    # Lennard-Jones parameters
-    st.sidebar.subheader("Lennard-Jones Potential")
-    epsilon = st.sidebar.number_input("Epsilon (kcal/mol)", value=0.238, min_value=0.001, format="%.3f")
-    sigma = st.sidebar.number_input("Sigma (Angstrom)", value=3.4, min_value=0.1, format="%.2f")
-    
-    # Box parameters
-    st.sidebar.subheader("Simulation Box")
-    box_width = st.sidebar.number_input("Box Width (Angstrom)", value=20.0, min_value=5.0, format="%.1f")
-    box_height = st.sidebar.number_input("Box Height (Angstrom)", value=20.0, min_value=5.0, format="%.1f")
-    
-    # Simulation parameters
-    st.sidebar.subheader("Time Integration")
-    dt = st.sidebar.number_input("Time Step (fs)", value=1.0, min_value=0.001, max_value=10.0, format="%.3f")
-    n_steps = st.sidebar.number_input("Number of Steps", value=5000, min_value=100, max_value=100000, step=100)
-    
-    # Random seed
-    st.sidebar.subheader("Random Seed")
-    random_seed = st.sidebar.number_input("Seed", value=42, min_value=0, step=1)
-    
-    # Particle 1 parameters
-    st.sidebar.subheader("Particle 1")
-    mass1 = st.sidebar.number_input("Mass 1 (amu)", value=39.948, min_value=0.1, format="%.3f")
-    vel1_x = st.sidebar.number_input("Velocity 1 X (A/fs)", value=0.02, format="%.4f")
-    vel1_y = st.sidebar.number_input("Velocity 1 Y (A/fs)", value=0.02, format="%.4f")
-    fixed1 = st.sidebar.checkbox("Fixed Particle 1", value=False)
-    
-    # Particle 2 parameters
-    st.sidebar.subheader("Particle 2")
-    mass2 = st.sidebar.number_input("Mass 2 (amu)", value=39.948, min_value=0.1, format="%.3f")
-    vel2_x = st.sidebar.number_input("Velocity 2 X (A/fs)", value=0.0, format="%.4f")
-    vel2_y = st.sidebar.number_input("Velocity 2 Y (A/fs)", value=0.0, format="%.4f")
-    fixed2 = st.sidebar.checkbox("Fixed Particle 2", value=True)
+    st.markdown("""
+    Interactive simulation of two particles interacting via **Lennard-Jones potential** in a 2D box.
+    Configure parameters below, run the simulation, and visualize the results.
+    """)
+    st.markdown("---")
 
-    # Run simulation button
-    run_button = st.sidebar.button("🚀 Run Simulation", type="primary", use_container_width=True)
+    # ==================== MIDDLE SECTION: Parameters and Run Button ====================
+    st.header("⚙️ Simulation Parameters")
 
-    # Main content area
-    col1, col2 = st.columns([1, 1])
+    # Create columns for parameter inputs
+    param_col1, param_col2, param_col3 = st.columns(3)
 
-    with col1:
-        st.subheader("📋 Current Parameters")
-        st.markdown(f"""
-        **Lennard-Jones:** ε = {epsilon} kcal/mol, σ = {sigma} Å
-        **Box Size:** {box_width} × {box_height} Å
-        **Time Step:** {dt} fs, **Steps:** {n_steps}
-        **Total Time:** {n_steps * dt:.1f} fs
-        **Random Seed:** {random_seed}
-        """)
+    with param_col1:
+        st.subheader("Lennard-Jones Potential")
+        epsilon = st.number_input("Epsilon (kcal/mol)", value=0.238, min_value=0.001, format="%.3f")
+        sigma = st.number_input("Sigma (Angstrom)", value=3.4, min_value=0.1, format="%.2f")
 
-    with col2:
-        st.subheader("🔴🔵 Particle Configuration")
-        st.markdown(f"""
-        **Particle 1:** mass = {mass1} amu, v = ({vel1_x}, {vel1_y}) Å/fs {"[FIXED]" if fixed1 else ""}
-        **Particle 2:** mass = {mass2} amu, v = ({vel2_x}, {vel2_y}) Å/fs {"[FIXED]" if fixed2 else ""}
-        """)
+        st.subheader("Simulation Box")
+        box_width = st.number_input("Box Width (Angstrom)", value=20.0, min_value=5.0, format="%.1f")
+        box_height = st.number_input("Box Height (Angstrom)", value=20.0, min_value=5.0, format="%.1f")
+
+    with param_col2:
+        st.subheader("Time Integration")
+        dt = st.number_input("Time Step (fs)", value=1.0, min_value=0.001, max_value=10.0, format="%.3f")
+        n_steps = st.number_input("Number of Steps", value=5000, min_value=100, max_value=100000, step=100)
+        random_seed = st.number_input("Random Seed", value=42, min_value=0, step=1)
+        st.markdown(f"**Total Time:** {n_steps * dt:.1f} fs")
+
+    with param_col3:
+        st.subheader("Particle 1 🔵")
+        mass1 = st.number_input("Mass 1 (amu)", value=39.948, min_value=0.1, format="%.3f")
+        p1_vel_col1, p1_vel_col2 = st.columns(2)
+        with p1_vel_col1:
+            vel1_x = st.number_input("Vel 1 X (A/fs)", value=0.02, format="%.4f")
+        with p1_vel_col2:
+            vel1_y = st.number_input("Vel 1 Y (A/fs)", value=0.02, format="%.4f")
+        fixed1 = st.checkbox("Fixed Particle 1", value=False)
+
+        st.subheader("Particle 2 🔴")
+        mass2 = st.number_input("Mass 2 (amu)", value=39.948, min_value=0.1, format="%.3f")
+        p2_vel_col1, p2_vel_col2 = st.columns(2)
+        with p2_vel_col1:
+            vel2_x = st.number_input("Vel 2 X (A/fs)", value=0.0, format="%.4f")
+        with p2_vel_col2:
+            vel2_y = st.number_input("Vel 2 Y (A/fs)", value=0.0, format="%.4f")
+        fixed2 = st.checkbox("Fixed Particle 2", value=True)
+
+    # Run simulation button (centered)
+    st.markdown("")
+    btn_col1, btn_col2, btn_col3 = st.columns([1, 1, 1])
+    with btn_col2:
+        run_button = st.button("🚀 Run Simulation", type="primary", use_container_width=True)
 
     # Run simulation when button is clicked
     if run_button:
@@ -295,6 +444,7 @@ def main():
         col3.metric("Energy Drift", f"{energy_drift:.2e} kcal/mol")
         col4.metric("Relative Drift", f"{relative_drift:.4f}%")
 
+    # ==================== BOTTOM SECTION: Visualization ====================
     # Display plots if simulation exists
     if 'simulation' in st.session_state:
         sim = st.session_state['simulation']
@@ -302,26 +452,64 @@ def main():
         st.markdown("---")
         st.header("📊 Visualization")
 
-        # Plot tabs
-        tab1, tab2, tab3 = st.tabs(["🗺️ Trajectory", "⚡ Energy", "📏 Distance"])
+        # Two main tabs: Static Outputs and Interactive
+        tab_static, tab_interactive = st.tabs(["📈 Static Outputs", "🎬 Interactive Trajectory"])
 
-        with tab1:
+        # Tab 1: All static figures displayed at once
+        with tab_static:
+            st.subheader("Complete Simulation Results")
+
+            # Trajectory plot
+            st.markdown("### 🗺️ Particle Trajectories")
             fig_traj = create_trajectory_figure(sim)
             if fig_traj:
                 st.pyplot(fig_traj)
                 plt.close(fig_traj)
 
-        with tab2:
+            st.markdown("---")
+
+            # Energy plot
+            st.markdown("### ⚡ Energy Analysis")
             fig_energy = create_energy_figure(sim)
             if fig_energy:
                 st.pyplot(fig_energy)
                 plt.close(fig_energy)
 
-        with tab3:
+            st.markdown("---")
+
+            # Distance plot
+            st.markdown("### 📏 Inter-particle Distance")
             fig_dist = create_distance_figure(sim)
             if fig_dist:
                 st.pyplot(fig_dist)
                 plt.close(fig_dist)
+
+        # Tab 2: Interactive trajectory viewer with Plotly Express animation
+        with tab_interactive:
+            st.subheader("🎬 Interactive Trajectory Viewer")
+            st.markdown("""
+            Use the **slider** to navigate through frames or click **Play/Pause** to animate.
+            The full trajectory paths are shown in light colors, with current positions as large markers.
+            """)
+
+            n_frames = len(sim.history['pos1'])
+            if n_frames > 1:
+                # Calculate default frame step based on number of frames (aim for ~100 frames max)
+                default_step = max(1, n_frames // 100)
+
+                # Create and display Plotly Express animated figure
+                fig_plotly = create_plotly_animated_trajectory(sim, frame_step=default_step)
+                if fig_plotly:
+                    st.plotly_chart(fig_plotly, use_container_width=True)
+
+                # Display summary info
+                st.markdown("**Simulation Summary:**")
+                info_col1, info_col2, info_col3 = st.columns(3)
+                info_col1.metric("Total Frames", n_frames)
+                info_col2.metric("Total Time", f"{sim.history['time'][-1]:.1f} fs")
+                info_col3.metric("Animation Frames", len(range(0, n_frames, max(1, default_step))) + 1)
+            else:
+                st.warning("Not enough frames to display interactive trajectory.")
 
 
 if __name__ == "__main__":
