@@ -81,7 +81,19 @@ After simulation completion, the app displays:
 
 ## Running the App
 
-### Local Development
+### Using Make (Recommended)
+
+```bash
+# Install dependencies
+make install
+
+# Launch the app
+make app
+```
+
+The app will open in your default browser at `http://localhost:8501`
+
+### Using Streamlit Directly
 
 ```bash
 # Install dependencies
@@ -90,8 +102,6 @@ pip install -r requirements.txt
 # Run the app
 streamlit run src/streamlit_app.py
 ```
-
-The app will open in your default browser at `http://localhost:8501`
 
 ### Command Line Options
 
@@ -161,7 +171,10 @@ The Streamlit app includes comprehensive tests in `tests/test_streamlit_app.py`:
 ### Running Tests
 
 ```bash
-# Run all Streamlit tests
+# Run all tests (including Streamlit tests)
+make test
+
+# Run only Streamlit tests
 pytest tests/test_streamlit_app.py -v
 
 # Run specific test class

@@ -65,6 +65,8 @@ An interactive web interface is available for running simulations with real-time
 
 ```bash
 streamlit run src/streamlit_app.py
+# Or using make
+make app
 ```
 
 **Features:**
@@ -78,14 +80,32 @@ See **[STREAMLIT_APP.md](docs/STREAMLIT_APP.md)** for complete documentation, de
 
 ## Running the Simulation
 
+### Quick Start with Make
+
+```bash
+# Run command-line simulation
+make run
+
+# Launch interactive web app
+make app
+
+# Run tests
+make test
+
+# See all available commands
+make help
+```
+
 ### Command Line
 
 ```bash
-python -m src.md_simulation
-```
+# Using make (recommended)
+make run
 
-Or from the src directory:
-```bash
+# Or directly with Python
+python -m src.md_simulation
+
+# Or from the src directory
 cd src
 python md_simulation.py
 ```
@@ -100,6 +120,10 @@ This will:
 ### Interactive Web App
 
 ```bash
+# Using make (recommended)
+make app
+
+# Or directly with streamlit
 streamlit run src/streamlit_app.py
 ```
 
@@ -191,12 +215,16 @@ This project includes a comprehensive test suite using pytest:
 
 ```bash
 # Install test dependencies
-pip install -r requirements.txt
+make install
 
 # Run all tests
-pytest tests/ -v
+make test
 
-# Run with coverage
+# Run with coverage report
+make coverage
+
+# Or use pytest directly
+pytest tests/ -v
 pytest tests/ --cov=src --cov-report=term
 ```
 
@@ -219,11 +247,15 @@ See [`.github/workflows/README.md`](.github/workflows/README.md) for CI/CD docum
 ## Dependencies
 - `numpy>=1.20.0`: Numerical computations
 - `matplotlib>=3.3.0`: Visualization
+- `streamlit>=1.28.0`: Interactive web app
+- `plotly>=5.0.0`: Interactive visualizations
 - `pytest>=7.0.0`: Testing framework
 - `pytest-cov>=3.0.0`: Coverage reporting
 
 Install all dependencies:
 ```bash
+make install
+# Or directly with pip
 pip install -r requirements.txt
 ```
 
@@ -270,6 +302,7 @@ two_particles_MD/
 │   ├── PARALLELIZATION_GUIDE.md  # Parallelization guide
 │   └── ...                       # Other documentation
 ├── requirements.txt          # Python dependencies
+├── Makefile                  # Convenient commands
 ├── README.md                 # This file
 ├── LICENSE                   # MIT License
 ├── .gitignore                # Git ignore rules
@@ -387,5 +420,19 @@ Contributions are welcome! Please see [CONTRIBUTING.md](docs/CONTRIBUTING.md) fo
 
 ## Quick Start
 
-For a quick start guide, see [USAGE.md](docs/USAGE.md).
+```bash
+# Install dependencies
+make install
+
+# Run simulation
+make run
+
+# Or launch interactive app
+make app
+
+# Run tests
+make test
+```
+
+For a detailed guide, see [USAGE.md](docs/USAGE.md).
 

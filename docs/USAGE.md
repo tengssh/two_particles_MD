@@ -2,7 +2,21 @@
 
 ## Running the Simulation
 
-Simply run:
+### Using Make (Recommended)
+
+```bash
+# Run the simulation
+make run
+
+# Or launch interactive web app
+make app
+
+# See all available commands
+make help
+```
+
+### Using Python Directly
+
 ```bash
 python -m src.md_simulation
 ```
