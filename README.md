@@ -3,6 +3,7 @@
 ![Tests](https://github.com/tengssh/two_particles_MD/actions/workflows/tests.yml/badge.svg)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20Demo-FF4B4B.svg)](https://two-particles-md.streamlit.app/)
 [![AI-Assisted](https://img.shields.io/badge/AI--Assisted-Augment%20Agent-blueviolet.svg)](https://www.augmentcode.com/)
 [![Built with Claude](https://img.shields.io/badge/Claude-Sonnet%204.5%20%2B%20Opus%204.5-orange.svg)](https://www.anthropic.com/)
 [![AI-Assisted](https://img.shields.io/badge/AI--Assisted-Antigravity-blueviolet.svg)](https://deepmind.google/)
@@ -16,6 +17,12 @@ This is an educational implementation of a simplified molecular dynamics (MD) si
 - **Elastic wall collisions** to keep particles in the box
 - **Comprehensive test suite** with pytest (32 tests, 55% coverage)
 - **CI/CD pipeline** with GitHub Actions
+
+## 🚀 Quick Links
+
+- **[Live Demo](https://two-particles-md.streamlit.app/)** - Try the interactive Streamlit app (no installation needed)
+- **[Documentation](docs/DOCUMENTATION_INDEX.md)** - Complete documentation index
+- **[Quick Start](#quick-start)** - Get started in minutes
 
 ## Class Structure
 
@@ -61,8 +68,11 @@ Note:
 
 ## 🌐 Interactive Streamlit App
 
+**🚀 [Try the Live Demo](https://two-particles-md.streamlit.app/)** - No installation required!
+
 An interactive web interface is available for running simulations with real-time parameter adjustment and visualization:
 
+**Run Locally:**
 ```bash
 streamlit run src/streamlit_app.py
 # Or using make
@@ -75,6 +85,11 @@ make app
 - 🚀 **One-click Execution**: Run simulations with progress tracking
 - 📈 **Energy Metrics**: Monitor energy conservation and drift
 - 🎬 **Animated Trajectories**: Frame-by-frame playback with play/pause controls
+
+**Deployment:**
+- **Live Demo**: [https://two-particles-md.streamlit.app/](https://two-particles-md.streamlit.app/)
+- **Platform**: Streamlit Community Cloud
+- **Status**: ✅ Active
 
 See **[STREAMLIT_APP.md](docs/STREAMLIT_APP.md)** for complete documentation, deployment guides, and CI/CD testing details.
 
