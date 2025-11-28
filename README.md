@@ -4,7 +4,9 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![AI-Assisted](https://img.shields.io/badge/AI--Assisted-Augment%20Agent-blueviolet.svg)](https://www.augmentcode.com/)
-[![Built with Claude](https://img.shields.io/badge/Built%20with-Claude%20Sonnet%204.5-orange.svg)](https://www.anthropic.com/)
+[![Built with Claude](https://img.shields.io/badge/Claude-Sonnet%204.5%20%2B%20Opus%204.5-orange.svg)](https://www.anthropic.com/)
+[![AI-Assisted](https://img.shields.io/badge/AI--Assisted-Antigravity-blueviolet.svg)](https://deepmind.google/)
+[![Built with Claude](https://img.shields.io/badge/Claude-Sonnet%204.5-orange.svg)](https://www.anthropic.com/)
 
 ## Overview
 This is an educational implementation of a simplified molecular dynamics (MD) simulation featuring:
@@ -280,17 +282,32 @@ two_particles_MD/
 
 ## Acknowledgments
 
-This project was developed with assistance from **Augment Agent**, an agentic coding AI assistant developed by Augment Code, based on the Claude Sonnet 4.5 model by Anthropic.
+This project was developed with assistance from two AI coding assistants using different Claude models:
 
-### Development Contributions
+### Augment Agent (Augment Code)
 
-Augment Agent assisted with:
+**Initial Development & Streamlit App** - Developed with **Augment Agent**, an agentic coding AI assistant by Augment Code, using both Claude Sonnet 4.5 and Claude Opus 4.5 by Anthropic.
+
+**Claude Sonnet 4.5** was used for:
 - 🏗️ **Architecture Design**: Educational class structure with comprehensive documentation
-- 🧪 **Test Suite**: Complete pytest-based testing infrastructure (32 tests, 55% coverage)
+- 🧪 **Test Suite**: Complete pytest-based testing infrastructure for core simulation (32 tests)
 - 🔄 **CI/CD Pipeline**: GitHub Actions workflows for multi-platform, multi-version testing
 - 📚 **Documentation**: Comprehensive guides including README, TESTING, CONTRIBUTING, and deployment checklists
 - 🎨 **Visualization**: Matplotlib-based trajectory and energy plotting with customized styling
 - 🔧 **Code Quality**: Integration of black, isort, and flake8 for maintaining code standards
+
+**Claude Opus 4.5** was used for:
+- 🌐 **Streamlit Web App**: Interactive parameter controls, real-time visualization, and animated trajectories
+- 🧪 **Streamlit Tests**: Comprehensive test suite for the web app (17 additional tests)
+
+### Antigravity (Google DeepMind)
+
+**CI/CD Fixes & Documentation** - Bug fixes and documentation updates were developed with **Antigravity**, an agentic coding AI assistant by Google DeepMind, using Claude Sonnet 4.5 by Anthropic.
+
+Antigravity assisted with:
+- 🔧 **CI/CD Fixes**: Resolved platform-specific test failures on Linux, macOS, and Windows
+- 📚 **Documentation**: CI troubleshooting documentation, updated README and workflow docs
+- 📊 **Test Optimization**: Adjusted test parameters for CI environments
 
 ### AI-Assisted Development
 
@@ -298,14 +315,15 @@ This project demonstrates the capabilities of AI-assisted software development, 
 - Rapid prototyping of scientific computing code
 - Automated test generation and conversion (unittest → pytest)
 - Professional CI/CD setup with multi-platform testing matrices
+- Interactive web application development
+- Platform-specific debugging and optimization
 - Comprehensive documentation generation
 - Best practices implementation for Python projects
 
-**Model Information:**
-- **AI Assistant**: Augment Agent
-- **Developer**: Augment Code
-- **Base Model**: Claude Sonnet 4.5 by Anthropic
-- **Capabilities**: Codebase-aware context engine, multi-file editing, testing infrastructure, CI/CD setup
+**Detailed Attribution:**
+- [AUGMENT_ATTRIBUTION.md](.github/AUGMENT_ATTRIBUTION.md) - Augment Agent contributions
+- [ANTIGRAVITY_ATTRIBUTION.md](.github/ANTIGRAVITY_ATTRIBUTION.md) - Antigravity contributions
+- [AI_DEVELOPMENT_WORKFLOW.md](.github/AI_DEVELOPMENT_WORKFLOW.md) - Development process
 
 ---
 
