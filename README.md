@@ -406,13 +406,21 @@ See the guides for detailed explanations, code examples, and benchmarks!
 ## Branches
 
 This repository maintains the following branches:
-- **main**: The stable production branch containing the core implementation
+- **main**: The stable production branch containing the core implementation and Streamlit app
 - **research**: Active development branch for exploring new features and improvements
+- **feature/streamlit-app**: Development branch for the interactive Streamlit web application (merged to main)
 
 ### Development Workflow
 1. The `main` branch contains the stable, production-ready code
-2. New features and research are developed in the `research` branch
-3. Tested and validated improvements are merged back to `main` via pull requests
+2. New features and research are developed in feature branches (e.g., `feature/streamlit-app`)
+3. The `research` branch is used for experimental features and improvements
+4. Tested and validated improvements are merged back to `main` via pull requests
+
+### Recent Developments
+- **Streamlit App**: Interactive web interface merged from `feature/streamlit-app` branch
+  - Added comprehensive test suite (17 tests)
+  - Platform-specific CI/CD fixes for Linux, macOS, and Windows
+  - Increased test coverage from 55% to 75%
 
 ## Contributing
 

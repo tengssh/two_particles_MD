@@ -19,18 +19,21 @@ two_particles_MD/
 │   ├── pull_request_template.md      # PR template
 │   ├── BADGES.md                     # Badge templates for README
 │   ├── QUICK_REFERENCE.md            # Quick reference for CI/CD commands
-│   ├── AUGMENT_ATTRIBUTION.md        # AI attribution
+│   ├── AUGMENT_ATTRIBUTION.md        # Augment Agent AI attribution
+│   ├── ANTIGRAVITY_ATTRIBUTION.md    # Antigravity AI attribution
 │   └── AI_DEVELOPMENT_WORKFLOW.md    # AI development workflow
 │
 ├── src/                              # Source code
 │   ├── __init__.py                   # Package marker
-│   └── md_simulation.py              # Main simulation code
+│   ├── md_simulation.py              # Main simulation code
+│   └── streamlit_app.py              # Interactive web app
 │
 ├── tests/                            # Test suite (pytest)
 │   ├── __init__.py                   # Package marker
 │   ├── test_particle.py              # Particle class tests (8 tests)
 │   ├── test_potential.py             # LJ potential tests (15 tests)
 │   ├── test_simulation.py            # Simulation tests (9 tests)
+│   ├── test_streamlit_app.py         # Streamlit app tests (17 tests)
 │   └── README.md                     # Testing documentation
 │
 ├── examples/                         # Example scripts and notebooks
@@ -41,20 +44,7 @@ two_particles_MD/
 │
 ├── docs/                             # Documentation
 │   ├── USAGE.md                      # Quick start guide
-│   ├── CONTRIBUTING.md               # Contribution guidelines
-│   ├── TESTING.md                    # Testing guide
-│   ├── CI_CD_SETUP.md                # CI/CD setup guide
-│   ├── PROJECT_SUMMARY.md            # This file
-│   ├── DEPLOYMENT_CHECKLIST.md       # Deployment checklist
-│   ├── DOCUMENTATION_INDEX.md        # Documentation index
-│   ├── PROFILING_GUIDE.md            # Profiling guide
-│   ├── PARALLELIZATION_GUIDE.md      # Parallelization guide
-│   ├── AUGMENT_AGENT_ADDITIONS.md    # AI additions summary
-│   └── MPI_INSTALLATION.md           # MPI installation guide
-│
-├── requirements.txt                  # Python dependencies
-├── README.md                         # Project documentation
-├── LICENSE                           # MIT License
+│   ├── STREAMLIT_APP.md              # Streamlit app guide
 └── .gitignore                        # Git ignore rules
 
 ```
@@ -383,9 +373,9 @@ The diagrams above use [Mermaid](https://mermaid.js.org/) syntax for visualizati
 **Conversion:** unittest → pytest ✅
 
 **Test Statistics:**
-- **Total Tests:** 32
-- **Test Files:** 3
-- **Code Coverage:** 55% (138/250 statements)
+- **Total Tests:** 49 (32 core + 17 Streamlit)
+- **Test Files:** 4
+- **Code Coverage:** 75%
 - **All Tests:** ✅ Passing
 
 ### Test Files
@@ -407,6 +397,13 @@ The diagrams above use [Mermaid](https://mermaid.js.org/) syntax for visualizati
    - Energy conservation
    - Wall collisions
    - History recording
+
+4. **`test_streamlit_app.py`** (17 tests)
+   - App loading and UI elements
+   - Parameter inputs and defaults
+   - Simulation execution
+   - Visualization generation
+   - Session state management
 
 ### pytest Features Used
 
@@ -466,11 +463,12 @@ The diagrams above use [Mermaid](https://mermaid.js.org/) syntax for visualizati
 
 | Metric | Value |
 |--------|-------|
-| Total Tests | 32 |
-| Test Coverage | 55% |
-| Lines of Code | ~250 |
-| Test Files | 3 |
+| Total Tests | 49 |
+| Test Coverage | 75% |
+| Lines of Code | ~770 (250 core + 520 Streamlit) |
+| Test Files | 4 |
 | CI/CD Jobs | 12 |
+| Documentation Files | 16+ |
 
 ### Test Execution Time
 
@@ -489,6 +487,16 @@ The diagrams above use [Mermaid](https://mermaid.js.org/) syntax for visualizati
 - ✅ Energy conservation tracking
 - ✅ Trajectory visualization
 - ✅ Random seed support
+
+### Interactive Web App
+
+- ✅ Streamlit web interface
+- ✅ Real-time parameter adjustment
+- ✅ Interactive Plotly animations
+- ✅ Static matplotlib visualizations
+- ✅ Energy metrics display
+- ✅ Session state management
+- ✅ Progress tracking
 
 ### Testing
 
@@ -526,16 +534,24 @@ git clone https://github.com/YOUR_USERNAME/two_particles_MD.git
 cd two_particles_MD
 
 # Install dependencies
-pip install -r requirements.txt
+make install
+# Or: pip install -r requirements.txt
 
 # Run simulation
-python -m src.md_simulation
+make run
+# Or: python -m src.md_simulation
+
+# Launch Streamlit app
+make app
+# Or: streamlit run src/streamlit_app.py
 
 # Run tests
-pytest tests/ -v
+make test
+# Or: pytest tests/ -v
 
 # Check coverage
-pytest tests/ --cov=src --cov-report=term
+make coverage
+# Or: pytest tests/ --cov=src --cov-report=term
 ```
 
 ### 2. Making Changes
@@ -686,15 +702,28 @@ The project is now **production-ready** with professional development practices!
 
 ## 🤖 AI-Assisted Development
 
-This project was developed with assistance from **Augment Agent**, an agentic coding AI assistant developed by Augment Code, based on the Claude Sonnet 4.5 model by Anthropic.
+This project was developed with assistance from two AI coding assistants:
 
-### AI Contributions
-- 🏗️ Architecture design and implementation
-- 🧪 Complete test suite (unittest → pytest conversion)
-- 🔄 CI/CD pipeline setup (12-job testing matrix)
-- 📚 Comprehensive documentation (10+ guides)
-- 🎨 Visualization and styling
-- 🔧 Code quality tools integration
+### Augment Agent (Augment Code)
+**Models:** Claude Sonnet 4.5 + Claude Opus 4.5 by Anthropic
 
-See [`.github/AUGMENT_ATTRIBUTION.md`](.github/AUGMENT_ATTRIBUTION.md) for detailed attribution and development timeline.
+**Contributions:**
+- 🏗️ Architecture design and implementation (Sonnet)
+- 🧪 Complete test suite (unittest → pytest conversion) (Sonnet)
+- 🔄 CI/CD pipeline setup (12-job testing matrix) (Sonnet)
+- 📚 Comprehensive documentation (10+ guides) (Sonnet)
+- 🎨 Visualization and styling (Sonnet)
+- 🔧 Code quality tools integration (Sonnet)
+- 🌐 Interactive Streamlit web app (Opus)
+- 🧪 Streamlit test suite (17 tests) (Opus)
+
+### Antigravity (Google DeepMind)
+**Model:** Claude Sonnet 4.5 by Anthropic
+
+**Contributions:**
+- 🔧 Platform-specific CI/CD fixes (Linux, macOS, Windows)
+- 📚 CI troubleshooting documentation
+- 📊 Test optimization for CI environments
+
+See [`.github/AUGMENT_ATTRIBUTION.md`](.github/AUGMENT_ATTRIBUTION.md) and [`.github/ANTIGRAVITY_ATTRIBUTION.md`](.github/ANTIGRAVITY_ATTRIBUTION.md) for detailed attribution.
 
