@@ -198,6 +198,163 @@ You'll receive email notifications for failed runs (configurable in GitHub setti
 
 ---
 
+## 🔧 CI Test Failures & Fixes (Historical Reference)
+
+This section documents CI test failures encountered and their solutions for future reference.
+
+### Issue 1: Streamlit Test Timeouts (Linux CI)
+
+**Date:** 2024-11-27  
+**Affected Tests:**
+- `test_run_button_click`
+- `test_simulation_produces_results`
+- `test_session_state_stores_simulation`
+
+**Error:**
+```
+RuntimeError: AppTest script run timed out after 3(s)
+```
+
+**Root Cause:**  
+The Streamlit AppTest framework has a default 3-second timeout. Running MD simulations with 100 steps exceeded this timeout in CI environments.
+
+**Solution:**  
+Modified `tests/test_streamlit_app.py`:
+1. Reduced simulation steps from 100 to 10
+2. Increased timeout to 10 seconds
+
+```python
+# Before
+at.number_input[5].set_value(100).run()
+at.button[0].click().run()
+
+# After
+at.number_input[5].set_value(10).run()  # Minimal steps for fast test
+at.button[0].click().run(timeout=10)    # Increased timeout
+```
+
+**Commit:** `94a1e59`
+
+---
+
+### Issue 2: macOS CI Crash
+
+**Date:** 2024-11-27  
+**Platform:** macOS runners  
+
+**Error:**
+```
+Abort trap: 6
+```
+
+**Root Cause:**  
+Matplotlib attempted to use an interactive backend (e.g., TkAgg, Qt5Agg) in a headless CI environment without a display server, causing a segmentation fault.
+
+**Solution:**  
+Added `MPLBACKEND=Agg` environment variable to force matplotlib to use the non-interactive Agg backend.
+
+Modified `.github/workflows/tests.yml`:
+```yaml
+- name: Run tests with pytest
+  env:
+    MPLBACKEND: Agg  # Force non-interactive backend
+  run: |
+    pytest tests/ -v --tb=short
+
+- name: Run tests with coverage
+  env:
+    MPLBACKEND: Agg  # Force non-interactive backend
+  run: |
+    pytest tests/ --cov=src --cov-report=xml --cov-report=term
+```
+
+**Commit:** `bf367c7`
+
+---
+
+### Issue 3: Windows CI Crash
+
+**Date:** 2024-11-27  
+**Platform:** Windows runners  
+
+**Error:**
+```
+Windows fatal exception: code 0x80000003
+```
+
+**Stack Trace:**  
+Crash occurred during pytest teardown phase after `test_simulation_produces_results`, indicating improper cleanup of matplotlib figures.
+
+**Root Cause:**  
+Matplotlib figures were not being properly closed after tests, causing memory/resource issues during teardown on Windows.
+
+**Solution:**  
+Modified `tests/test_streamlit_app.py`:
+
+1. Set Agg backend at module level (before any matplotlib imports):
+```python
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend for CI
+import matplotlib.pyplot as plt
+```
+
+2. Added pytest fixture for automatic cleanup:
+```python
+@pytest.fixture(autouse=True)
+def cleanup_matplotlib():
+    """Ensure all matplotlib figures are closed after each test."""
+    yield
+    plt.close('all')
+```
+
+**Why Both Changes?**
+- `matplotlib.use('Agg')`: Prevents interactive backend issues
+- `plt.close('all')`: Ensures proper cleanup even if tests create figures
+
+**Commit:** `e99c813`
+
+---
+
+### Summary of Fixes
+
+| Issue | Platform | Solution | Files Modified |
+|-------|----------|----------|----------------|
+| Test Timeout | Linux | Reduce steps, increase timeout | `tests/test_streamlit_app.py` |
+| Abort Trap | macOS | Set `MPLBACKEND=Agg` env var | `.github/workflows/tests.yml` |
+| Fatal Exception | Windows | Agg backend + cleanup fixture | `tests/test_streamlit_app.py` |
+
+### Key Takeaways
+
+1. **Always use non-interactive backends in CI**: Set `MPLBACKEND=Agg` or `matplotlib.use('Agg')`
+2. **Clean up resources**: Use pytest fixtures with `autouse=True` for automatic cleanup
+3. **Adjust timeouts for CI**: CI environments are slower than local machines
+4. **Test locally on multiple platforms**: Use VMs or containers to catch platform-specific issues
+5. **Keep test data minimal**: Use the smallest dataset that validates functionality
+
+### Testing Matplotlib in CI
+
+For any project using matplotlib in CI, add these safeguards:
+
+**In workflow file:**
+```yaml
+env:
+  MPLBACKEND: Agg
+```
+
+**In test file:**
+```python
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+@pytest.fixture(autouse=True)
+def cleanup_matplotlib():
+    yield
+    plt.close('all')
+```
+
+---
+
 ## 💡 Tips & Troubleshooting
 
 ### Git Authentication Issues
@@ -310,4 +467,4 @@ D:\project\repo>
 
 ---
 
-*Last Updated: 2024-11-08*
+*Last Updated: 2024-11-27*
