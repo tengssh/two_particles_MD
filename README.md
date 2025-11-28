@@ -57,7 +57,26 @@ Note:
 - `plot_energy()`: Displays energy components and conservation over time
 - `plot_distance()`: Plots inter-particle distance vs time
 
+## 🌐 Interactive Streamlit App
+
+An interactive web interface is available for running simulations with real-time parameter adjustment and visualization:
+
+```bash
+streamlit run src/streamlit_app.py
+```
+
+**Features:**
+- 🎛️ **Interactive Controls**: Adjust all simulation parameters through a web UI
+- 📊 **Real-time Visualization**: Static plots and interactive Plotly animations
+- 🚀 **One-click Execution**: Run simulations with progress tracking
+- 📈 **Energy Metrics**: Monitor energy conservation and drift
+- 🎬 **Animated Trajectories**: Frame-by-frame playback with play/pause controls
+
+See **[STREAMLIT_APP.md](docs/STREAMLIT_APP.md)** for complete documentation, deployment guides, and CI/CD testing details.
+
 ## Running the Simulation
+
+### Command Line
 
 ```bash
 python -m src.md_simulation
@@ -75,6 +94,14 @@ This will:
 3. Set custom initial velocities for each particle
 4. Simulate for 5000 time steps (5 picoseconds)
 5. Generate plots showing trajectories, energy, and distance
+
+### Interactive Web App
+
+```bash
+streamlit run src/streamlit_app.py
+```
+
+Opens an interactive web interface at `http://localhost:8501` with full parameter control and visualization options.
 
 ## Example Usage
 
@@ -172,9 +199,9 @@ pytest tests/ --cov=src --cov-report=term
 ```
 
 **Test Coverage:**
-- ✅ 32 tests covering all major components
-- ✅ 55% code coverage
-- ✅ Tests for Particle, LennardJonesPotential, and TwoParticleMD classes
+- ✅ 49 tests covering all major components
+- ✅ 75% code coverage
+- ✅ Tests for Particle, LennardJonesPotential, TwoParticleMD, and Streamlit app
 
 See [`tests/README.md`](tests/README.md) for detailed testing documentation.
 
@@ -217,13 +244,15 @@ pip install -r requirements.txt
 two_particles_MD/
 ├── src/                      # Source code
 │   ├── __init__.py
-│   └── md_simulation.py      # Main simulation code
+│   ├── md_simulation.py      # Main simulation code
+│   └── streamlit_app.py      # Interactive web app
 ├── tests/                    # Test suite
 │   ├── __init__.py
 │   ├── README.md             # Test documentation
 │   ├── test_particle.py      # Particle class tests
 │   ├── test_potential.py     # Potential class tests
-│   └── test_simulation.py    # Simulation class tests
+│   ├── test_simulation.py    # Simulation class tests
+│   └── test_streamlit_app.py # Streamlit app tests
 ├── examples/                 # Example scripts and notebooks
 │   ├── parallel_examples.py  # Parallelization examples
 │   ├── profile_md.py         # Profiling examples
@@ -231,6 +260,7 @@ two_particles_MD/
 ├── docs/                     # Documentation
 │   ├── DOCUMENTATION_INDEX.md    # Complete documentation index
 │   ├── PROJECT_SUMMARY.md        # Project overview with diagrams
+│   ├── STREAMLIT_APP.md          # Streamlit app guide
 │   ├── USAGE.md                  # Quick start guide
 │   ├── CONTRIBUTING.md           # Contribution guidelines
 │   ├── TESTING.md                # Testing guide

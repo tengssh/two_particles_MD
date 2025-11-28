@@ -18,6 +18,7 @@ Complete guide to all documentation in this project.
 |----------|-------------|----------|
 | [README.md](../README.md) | Main project documentation | Everyone |
 | [USAGE.md](USAGE.md) | Quick start guide | New users |
+| [STREAMLIT_APP.md](STREAMLIT_APP.md) | Interactive web app guide | All users |
 | [TESTING.md](TESTING.md) | How to run tests | Users & Developers |
 
 ### 👨‍💻 Developer Documentation
@@ -288,6 +289,9 @@ Complete guide to all documentation in this project.
 **"How do I run this?"**
 → USAGE.md
 
+**"How do I use the interactive web app?"**
+→ STREAMLIT_APP.md
+
 **"How do I run tests?"**
 → TESTING.md
 
@@ -399,6 +403,6 @@ This project has comprehensive documentation covering:
 ---
 
 *This documentation index was created with Augment Agent assistance.*  
-*Last Updated: 2025-11-08*  
-*Total Documents: 15+*
+*Last Updated: 2024-11-27*  
+*Total Documents: 16+*
 
