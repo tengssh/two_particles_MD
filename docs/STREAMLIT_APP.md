@@ -260,35 +260,270 @@ tests/
 
 ## Deployment
 
-### Streamlit Cloud (Free)
+### Live Demo
 
-1. Push code to GitHub
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your repository
-4. Deploy `src/streamlit_app.py`
+**🚀 [https://two-particles-md.streamlit.app/](https://two-particles-md.streamlit.app/)**
 
-### Docker
+The app is currently deployed on Streamlit Community Cloud and is publicly accessible.
 
+### Streamlit Community Cloud (Recommended - Free)
+
+**Current Deployment**: This project is deployed using this method.
+
+#### Prerequisites
+- GitHub account
+- Repository pushed to GitHub
+- `requirements.txt` in repository root
+
+#### Step-by-Step Deployment Guide
+
+**1. Prepare Your Repository**
+
+Ensure your repository has:
+```
+two_particles_MD/
+├── src/
+│   └── streamlit_app.py    # Main app file
+├── requirements.txt         # Dependencies
+└── README.md
+```
+
+**2. Sign Up for Streamlit Community Cloud**
+
+- Go to [share.streamlit.io](https://share.streamlit.io)
+- Click "Sign in with GitHub"
+- Authorize Streamlit to access your GitHub account
+
+**3. Deploy Your App**
+
+- Click "New app" button
+- Fill in the deployment form:
+  - **Repository**: `tengssh/two_particles_MD` (or your username/repo)
+  - **Branch**: `main`
+  - **Main file path**: `src/streamlit_app.py`
+  - **App URL** (optional): Choose a custom subdomain or use auto-generated
+- Click "Deploy!"
+
+**4. Wait for Deployment**
+
+- Initial deployment takes 2-5 minutes
+- You'll see a build log showing:
+  - Installing dependencies
+  - Starting the app
+  - Health checks
+- Once complete, your app will be live!
+
+**5. Get Your App URL**
+
+Your app will be available at:
+- Auto-generated: `https://[username]-[repo-name]-[random].streamlit.app`
+- Custom: `https://[your-custom-name].streamlit.app`
+
+**Example**: `https://two-particles-md.streamlit.app/`
+
+#### Managing Your Deployment
+
+**App Settings:**
+- Access via Streamlit Community Cloud dashboard
+- Settings → "Manage app"
+- Options:
+  - Reboot app
+  - Delete app
+  - View logs
+  - Update settings
+
+**Automatic Updates:**
+- App automatically redeploys when you push to GitHub
+- Monitors the specified branch (`main`)
+- Deployment triggered within 1-2 minutes of push
+
+**Viewing Logs:**
+- Click "Manage app" → "Logs"
+- Real-time logs show:
+  - User visits
+  - Errors
+  - Performance metrics
+
+**Resource Limits (Free Tier):**
+- 1 GB RAM
+- 1 CPU core
+- Unlimited apps (public)
+- Community support
+
+#### Troubleshooting Deployment
+
+**Issue: App won't start**
+- Check `requirements.txt` has all dependencies
+- Verify `src/streamlit_app.py` path is correct
+- Check logs for specific errors
+
+**Issue: Dependencies fail to install**
+- Ensure Python version compatibility (3.9-3.12)
+- Check for conflicting package versions
+- Try pinning specific versions in `requirements.txt`
+
+**Issue: App is slow**
+- Free tier has limited resources
+- Reduce simulation steps for faster execution
+- Consider caching with `@st.cache_data`
+
+**Issue: App goes to sleep**
+- Free tier apps sleep after inactivity
+- First visit after sleep takes ~30 seconds to wake
+- Upgrade to paid tier for always-on apps
+
+### Alternative Deployment Options
+
+#### Docker Deployment
+
+**Dockerfile:**
 ```dockerfile
 FROM python:3.11-slim
+
 WORKDIR /app
+
+# Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
 COPY src/ ./src/
+
+# Expose Streamlit port
 EXPOSE 8501
-CMD ["streamlit", "run", "src/streamlit_app.py"]
+
+# Health check
+HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+
+# Run Streamlit
+CMD ["streamlit", "run", "src/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
 ```
 
-### Heroku
-
+**Build and Run:**
 ```bash
-# Create Procfile
-echo "web: streamlit run src/streamlit_app.py --server.port $PORT" > Procfile
+# Build image
+docker build -t two-particles-md .
+
+# Run container
+docker run -p 8501:8501 two-particles-md
+
+# Access at http://localhost:8501
+```
+
+#### Heroku Deployment
+
+**Setup Files:**
+
+`Procfile`:
+```
+web: streamlit run src/streamlit_app.py --server.port=$PORT --server.address=0.0.0.0
+```
+
+`runtime.txt`:
+```
+python-3.11.0
+```
+
+**Deploy:**
+```bash
+# Install Heroku CLI
+# Login to Heroku
+heroku login
+
+# Create app
+heroku create two-particles-md
 
 # Deploy
-heroku create
 git push heroku main
+
+# Open app
+heroku open
 ```
+
+#### Railway Deployment
+
+**Steps:**
+1. Go to [railway.app](https://railway.app)
+2. Click "New Project" → "Deploy from GitHub repo"
+3. Select your repository
+4. Railway auto-detects Streamlit
+5. Set start command: `streamlit run src/streamlit_app.py`
+6. Deploy!
+
+**Advantages:**
+- Free tier: 500 hours/month
+- Automatic HTTPS
+- Custom domains
+- Environment variables
+
+#### Render Deployment
+
+**Steps:**
+1. Go to [render.com](https://render.com)
+2. New → Web Service
+3. Connect GitHub repository
+4. Configure:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `streamlit run src/streamlit_app.py --server.port=$PORT --server.address=0.0.0.0`
+5. Deploy
+
+**Advantages:**
+- Free tier available
+- Auto-deploy from GitHub
+- SSL certificates included
+
+### Deployment Best Practices
+
+**1. Environment Variables**
+- Use Streamlit secrets for sensitive data
+- Create `.streamlit/secrets.toml` locally (gitignored)
+- Add secrets in Streamlit Cloud dashboard
+
+**2. Performance Optimization**
+- Use `@st.cache_data` for expensive computations
+- Reduce default simulation steps
+- Optimize frame sampling for animations
+
+**3. Monitoring**
+- Check logs regularly
+- Monitor resource usage
+- Track user feedback
+
+**4. Updates**
+- Test locally before pushing
+- Use feature branches for major changes
+- Monitor deployment logs after updates
+
+**5. Security**
+- Don't commit secrets to GitHub
+- Use environment variables for API keys
+- Keep dependencies updated
+
+### Cost Comparison
+
+| Platform | Free Tier | Paid Tier | Best For |
+|----------|-----------|-----------|----------|
+| **Streamlit Cloud** | ✅ Unlimited public apps | $20/month | Streamlit apps |
+| **Heroku** | ❌ (discontinued) | $7/month | General web apps |
+| **Railway** | 500 hrs/month | $5/month | Modern deployments |
+| **Render** | 750 hrs/month | $7/month | Full-stack apps |
+| **Docker** | Self-hosted | Variable | Full control |
+
+### Recommended: Streamlit Community Cloud
+
+**Why we chose it:**
+- ✅ **Free**: Unlimited public apps
+- ✅ **Easy**: One-click deployment from GitHub
+- ✅ **Automatic**: Auto-deploy on git push
+- ✅ **Optimized**: Built specifically for Streamlit
+- ✅ **Fast**: Quick cold starts
+- ✅ **Reliable**: 99.9% uptime
+
+**Current Status:**
+- **URL**: [https://two-particles-md.streamlit.app/](https://two-particles-md.streamlit.app/)
+- **Platform**: Streamlit Community Cloud
+- **Status**: ✅ Active
+- **Auto-deploy**: Enabled (from `main` branch)
 
 ## Troubleshooting
 

@@ -98,6 +98,125 @@ git push -u origin main
 - [ ] Verify coverage reports
 - [ ] Check linting results
 
+## 🌐 Streamlit App Deployment
+
+### Prerequisites
+
+- [ ] GitHub repository is public and pushed
+- [ ] All tests pass in CI/CD
+- [ ] `requirements.txt` includes streamlit and dependencies
+- [ ] `src/streamlit_app.py` exists and works locally
+
+### Step 1: Test Streamlit App Locally
+
+- [ ] Run app locally
+  ```bash
+  streamlit run src/streamlit_app.py
+  # Or: make app
+  ```
+
+- [ ] Verify all features work:
+  - [ ] Parameter controls
+  - [ ] Simulation execution
+  - [ ] Trajectory visualization
+  - [ ] Energy plots
+  - [ ] Animated trajectories
+
+- [ ] Test with different parameters
+- [ ] Check for errors in console
+
+### Step 2: Deploy to Streamlit Community Cloud
+
+- [ ] Go to [share.streamlit.io](https://share.streamlit.io)
+- [ ] Sign in with GitHub account
+- [ ] Click "New app"
+- [ ] Fill deployment form:
+  - [ ] Repository: `tengssh/two_particles_MD`
+  - [ ] Branch: `main`
+  - [ ] Main file path: `src/streamlit_app.py`
+  - [ ] App URL: Choose custom name (e.g., `two-particles-md`)
+- [ ] Click "Deploy!"
+
+### Step 3: Monitor Deployment
+
+- [ ] Watch build logs for errors
+- [ ] Wait for deployment to complete (2-5 minutes)
+- [ ] Verify app loads successfully
+- [ ] Test all features in deployed app
+- [ ] Check for any deployment-specific issues
+
+### Step 4: Configure App Settings
+
+- [ ] Access app settings in Streamlit dashboard
+- [ ] Configure (if needed):
+  - [ ] Python version (3.9-3.12)
+  - [ ] Environment variables
+  - [ ] Secrets (if any)
+- [ ] Enable auto-deploy from GitHub
+- [ ] Save settings
+
+### Step 5: Update Documentation
+
+- [ ] Add live demo badge to README.md
+  ```markdown
+  [![Streamlit App](https://img.shields.io/badge/Streamlit-Live%20Demo-FF4B4B.svg)](https://your-app-url.streamlit.app/)
+  ```
+
+- [ ] Add Quick Links section with live demo
+- [ ] Update Streamlit App section with deployment info
+- [ ] Document deployment URL in STREAMLIT_APP.md
+
+### Step 6: Test Deployed App
+
+- [ ] Visit deployed app URL
+- [ ] Test all simulation parameters
+- [ ] Run multiple simulations
+- [ ] Check visualizations render correctly
+- [ ] Test on different browsers:
+  - [ ] Chrome
+  - [ ] Firefox
+  - [ ] Safari
+  - [ ] Edge
+- [ ] Test on mobile devices (optional)
+
+### Step 7: Set Up Monitoring
+
+- [ ] Bookmark Streamlit dashboard
+- [ ] Enable email notifications (optional)
+- [ ] Check logs regularly
+- [ ] Monitor resource usage
+- [ ] Track user feedback
+
+### Streamlit Deployment Checklist
+
+**Current Status:**
+- [x] App deployed to Streamlit Community Cloud
+- [x] URL: https://two-particles-md.streamlit.app/
+- [x] Auto-deploy enabled
+- [x] Documentation updated
+- [x] Live demo badge added
+
+**Troubleshooting:**
+
+If deployment fails:
+- [ ] Check `requirements.txt` has all dependencies
+- [ ] Verify file path `src/streamlit_app.py` is correct
+- [ ] Review build logs for specific errors
+- [ ] Ensure Python version compatibility
+- [ ] Check for import errors
+
+If app is slow:
+- [ ] Reduce default simulation steps
+- [ ] Add caching with `@st.cache_data`
+- [ ] Optimize frame sampling
+- [ ] Consider upgrading to paid tier
+
+If app crashes:
+- [ ] Check logs in Streamlit dashboard
+- [ ] Test locally with same parameters
+- [ ] Verify memory usage (1GB limit on free tier)
+- [ ] Check for matplotlib backend issues
+
 ## 🔧 Optional Configuration
 
 ### Codecov Setup (Optional)
